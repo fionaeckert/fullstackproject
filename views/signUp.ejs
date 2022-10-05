@@ -1,21 +1,26 @@
-
-<form action="/createuser" method="post">
-    <div>
-        <legend>Registration</legend>
-        <% {%>
-            First Name: <input type="text" name="firstname" aria-required="true"/><br><br>
-            Last Name:  <input type="text" name="lastname" aria-required="true"/><br><br>
-            Username:  <input type="text" name="username" aria-required="true"/><br><br>
-            Password:  <input type="password" name="password" aria-required="true" min="6" max="20"/><br><br>
-            Confirm Password:  <input type="password" name="confirm password" aria-required="true" min="6" max="20"/><br><br>
-            <input type="submit" value="Submit"/><br><br>
-            <p id="errormessage"> <%= error %></p><hr>
-        <%} %>
-    </div>
-</form>
-
-<style>
-    #errormessage {
-        color: red;
-    }
-</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bootstrap Site</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+</head>
+<body>
+    <form action="/createuser" method="post">
+        <div>
+            <legend>Registration</legend>
+            <% {%>
+                firstname: <input type="text" name="firstname" value="John" /><br><br>
+                lastname:  <input type="text" name="lastname" value="Doe" /><br><br>
+                username:  <input type="text" name="username" value="JohnDoe123" /><br><br>
+                password:  <input type="text" name="password" value="abc12345" /><br><br>
+                <h2> <%= error %></h2><br><br>
+                <input type="submit" value="accept"/><br><br><hr>
+            <%} %>
+        </div>
+    </form>
+</body>
+</html>
