@@ -1,0 +1,14 @@
+
+<form action="/createuser" method="post">
+    <div>
+        <legend>Registration</legend>
+        <% {%>
+            firstname: <input type="text" name="firstname" value="John" /><br><br>
+            lastname:  <input type="text" name="lastname" value="Doe" /><br><br>
+            username:  <input type="text" name="username" value="JohnDoe123" /><br><br>
+            password:  <input type="text" name="password" value="abc12345" /><br><br>
+            <h2> <%= error %></h2><br><br>
+            <input type="submit" value="accept"/><br><br><hr>
+        <%} %>
+    </div>
+</form>
