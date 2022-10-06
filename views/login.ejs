@@ -4,9 +4,28 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+        integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    
     <title>Login</title>
 </head>
 <body>
-    
+    <form action="/checkpassword" method="post" class="requires-validation" novalidate>
+        <% {%>
+            <div class="col-md-12">
+            <input class="form-control" type="text" name="username" placeholder="Username" aria-required="true" required>
+            </div>
+
+        <div class="col-md-12">
+            <input class="form-control" type="password" name="password" placeholder="Enter Password" required>
+        </div>
+
+
+            <div class="form-button mt-3">
+                <button id="submit" type="submit" class="btn btn-primary">Register</button>
+            </div>
+            <!-- <p> <%= error %></p><br><br> -->
+        <%} %>
+    </form>
 </body>
 </html>
