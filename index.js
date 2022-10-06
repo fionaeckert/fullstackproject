@@ -6,31 +6,79 @@ const { users } = require('./models')
 const bcrypt = require('bcrypt');
 const saltRounds = 8;
 let error = ''
+let username = null
 
 app.use(bodyParser.urlencoded({ extended: false }))
 
-// Checking for password match with confirmed password
 
-var checkmatchpw = function() {
-    if (document.getElementById('password').value !=
-        document.getElementById('confirm_password').value) {
-        document.getElementById('message').style.color = 'red';
-        document.getElementById('message').innerHTML = "Password doesn't match";
-    }
-}
-
-function validate(event) {
-    if (!passesValidation) event.preventDefault();
-  }
+app.use(express.static("public"));
 
 
-app.get('/', (req, res)=> {
+//Renders the registration (sign up) page on the port identified in app.use statement (3000)
+app.get('/registration', (req, res)=> {
     res.render("signUp",{
         error : error
     })
     error = ''
 })
 
+//Renders the login page on the port identified in app.use statement (3000)
+app.get('/login', (req, res)=> {
+    res.render("login",{
+        error : error
+    })
+    error = ''
+})
+
+//Renders the user's data from the database and displays it on the home page
+app.get('/home', async (req, res)=> {
+    console.log('username: ', username)
+    const user = await users.findOne({
+        where: {
+            'username' : username
+        }
+    })
+    console.log(user.username)
+
+    res.render("home",{
+        username: user.username,
+        firstName: user.firstName,
+        lastName : user.lastName
+
+    })
+    username = null
+})
+
+app.post('/checkpassword', async (req, res)=> {
+
+    const user = await users.findOne({
+        where: {
+            username : req.body.username
+        }
+    })
+    // console.log('user found:', user)
+    if(user!=null) {
+        bcrypt.compare(req.body.password, user.password, function(err, result) {
+
+            if(result == true) {
+                console.log('password matches')
+                username = user.username
+                res.redirect("/home")
+            }
+            else {
+                res.redirect('/login')
+                console.log('password does not match')
+            }
+        
+        
+        });
+
+    }
+    else {
+        res.redirect('/login')
+    }
+
+})
 
 app.post('/createuser', async (req, res) => {
     error = ''
@@ -89,7 +137,7 @@ app.post('/createuser', async (req, res) => {
         error = 'username already exists'
     }
     
-    res.redirect('/')
+    res.redirect('/registration')
 })
 
 app.listen(3000, console.log('Server running on port 3000'))
