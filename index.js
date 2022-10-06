@@ -15,7 +15,7 @@ app.use(express.static("public"));
 
 
 //Renders the registration (sign up) page on the port identified in app.use statement (3000)
-app.get('/registration', (req, res)=> {
+app.get('/', (req, res)=> {
     res.render("signUp",{
         error : error
     })
