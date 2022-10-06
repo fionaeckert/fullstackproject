@@ -1,9 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700;900&display=swap');
 
 
-
-
-
 .header {
 	padding-top: .5em;
 	padding-bottom: .5em;
@@ -12,14 +9,54 @@
 	border-radius: 5px;
 }
 
-*, body {
+body {
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     -moz-osx-font-smoothing: grayscale;
-    max-height: 100vh;
+    background: linear-gradient(253deg, #0cc898, #1797d2, #864fe1);
+    background-size: 300% 300%;
+    -webkit-animation: Background 25s ease infinite;
+    -moz-animation: Background 25s ease infinite;
+    animation: Background 25s ease infinite;
 }
+
+@-webkit-keyframes Background {
+    0% {
+      background-position: 0% 50%
+    }
+    50% {
+      background-position: 100% 50%
+    }
+    100% {
+      background-position: 0% 50%
+    }
+  }
+  
+  @-moz-keyframes Background {
+    0% {
+      background-position: 0% 50%
+    }
+    50% {
+      background-position: 100% 50%
+    }
+    100% {
+      background-position: 0% 50%
+    }
+  }
+  
+  @keyframes Background {
+    0% {
+      background-position: 0% 50%
+    }
+    50% {
+      background-position: 100% 50%
+    }
+    100% {
+      background-position: 0% 50%
+    }
+  }
 
 html, body {
     height: 100%;
@@ -101,14 +138,14 @@ html, body {
     background-color: #AAC4FF;
     outline: none;
     border: 0px;
-     box-shadow: none;
+    box-shadow: none;
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active{
     background-color: #B1B2FF;
     outline: none !important;
     border: none !important;
-     box-shadow: none;
+    box-shadow: none;
 }
 
 .form-content textarea {

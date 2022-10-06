@@ -2,6 +2,16 @@
 <html lang="en">
 
 <head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign-Up</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+</head>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bootstrap Site</title>
@@ -17,9 +27,6 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 
-
-
-
     <div class="form-body">
         <div class="row">
             <div class="form-holder">
@@ -33,6 +40,31 @@
                         <form action="/createuser" method="post" class="requires-validation" novalidate>
                             <% {%>
                                 <div class="col-md-12">
+
+                                <input class="form-control" type="text" name="username" pattern="/^[a-z0-9_-]{3,16}$/" placeholder="Username" aria-required="true" required>
+                                <div class="valid-feedback">Username field is valid!</div>
+                                <div class="invalid-feedback">Username field cannot be blank!</div>
+                                </div>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" name="firstname" pattern="/^[A-Za-z]+$/" placeholder="First Name" required>
+                                    <div class="valid-feedback">First Name field is valid!</div>
+                                    <div class="invalid-feedback">First Name field cannot be blank!</div>
+                                </div>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" name="lastname" pattern="/^[A-Za-z]+$/" placeholder="Last Name" required>
+                                    <div class="valid-feedback">Last Name field is valid!</div>
+                                    <div class="invalid-feedback">Last Name field cannot be blank!</div>
+                                </div>
+                            <div class="col-md-12">
+                                <input class="form-control" onkeyup='checkmatchpw()' type="password" name="password" pattern="/(?=(.*[0-9]))((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.{8,}$/" placeholder="Enter Password" required>
+                                <div class="valid-feedback">Password field is valid!</div>
+                                <div class="invalid-feedback">Password should have 1 lowercase letter, 1 uppercase letter, 1 number, and be at least 8 characters long</div>
+                            </div>
+                            <div class="col-md-12">
+                                <input class="form-control" onkeyup='checkmatchpw()' type="password" name="passwordconfirm" pattern="/(?=(.*[0-9]))((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.{8,}$/" placeholder="Enter Password" required>
+                                <div class="valid-feedback" id="message">Password field is valid!</div>
+                                <div class="invalid-feedback">Password should have 1 lowercase letter, 1 uppercase letter, 1 number, and be at least 8 characters long</div>
+
                                 <input class="form-control" type="text" name="username" placeholder="Username" aria-required="true" required>
                                 </div>
                                 <div class="col-md-12">
@@ -56,6 +88,7 @@
                                 <input class="form-control" type="password" name="confirmpassword" placeholder="Confirm Password" required>
                                 <div class="valid-feedback">Password field is valid!</div>
                                 <div class="invalid-feedback">Password field cannot be blank!</div>
+
                             </div>
                             <div class="col-md-12 mt-3">
                                 </div>
@@ -72,9 +105,10 @@
                             <div class="invalid-feedback">Please confirm that the entered data are all correct!</div>
                             
                             </div>
-                    
 
+                                <div class="form-button mt-6">
                                 <div class="form-button mt-3">
+
                                     <button id="submit" type="submit" class="btn btn-primary">Register</button>
                                 </div>
                                 <p> <%= error %></p><br><br>
@@ -84,8 +118,9 @@
                 </div>
             </div>
         </div>
+    </form>
+    <script src="../index.js"></script>
     </div>
-
 </body>
 
 </html>

@@ -10,7 +10,9 @@ let username = null
 
 app.use(bodyParser.urlencoded({ extended: false }))
 
+
 app.use(express.static("public"));
+
 
 //Renders the registration (sign up) page on the port identified in app.use statement (3000)
 app.get('/registration', (req, res)=> {
@@ -88,7 +90,7 @@ app.post('/createuser', async (req, res) => {
     })
     
     var regex = /^[A-Za-z]+$/;
-    var userregex = /^[0-9A-Za-z]+$/;
+    var userregex = /^[a-z0-9_-]{3,16}$/; // Letters, Numbers, Underscore and dash, min 3, max 16
     var pwregex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,20}$/
     console.log(regex.test(req.body.firstname))
     
