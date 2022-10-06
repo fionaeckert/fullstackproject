@@ -5,6 +5,7 @@ app.set('view engine', 'ejs')
 const { users } = require('./models')
 const bcrypt = require('bcrypt');
 const saltRounds = 8;
+const logger = require('./logger')
 let error = ''
 let username = null
 
