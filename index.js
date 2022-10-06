@@ -9,6 +9,20 @@ let error = ''
 
 app.use(bodyParser.urlencoded({ extended: false }))
 
+// Checking for password match with confirmed password
+
+var checkmatchpw = function() {
+    if (document.getElementById('password').value !=
+        document.getElementById('confirm_password').value) {
+        document.getElementById('message').style.color = 'red';
+        document.getElementById('message').innerHTML = "Password doesn't match";
+    }
+}
+
+function validate(event) {
+    if (!passesValidation) event.preventDefault();
+  }
+
 
 app.get('/', (req, res)=> {
     res.render("signUp",{

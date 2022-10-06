@@ -1,9 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700;900&display=swap');
 
 
-
-
-
 .header {
 	padding-top: .5em;
 	padding-bottom: .5em;
@@ -101,14 +98,14 @@ html, body {
     background-color: #AAC4FF;
     outline: none;
     border: 0px;
-     box-shadow: none;
+    box-shadow: none;
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active{
     background-color: #B1B2FF;
     outline: none !important;
     border: none !important;
-     box-shadow: none;
+    box-shadow: none;
 }
 
 .form-content textarea {
