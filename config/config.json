@@ -3,21 +3,21 @@
     "username": "postgres",
     "password": null,
     "database": "fullStackProject_DB",
-    "host": "limitless-temple-77311.herokuapp.com",
+    "host": "https://limitless-temple-77311.herokuapp.com/",
     "dialect": "postgres"
   },
   "test": {
     "username": "root",
     "password": null,
     "database": "database_test",
-    "host": "limitless-temple-77311.herokuapp.com",
+    "host": "https://limitless-temple-77311.herokuapp.com/",
     "dialect": "postgres"
   },
   "production": {
     "username": "root",
     "password": null,
     "database": "database_production",
-    "host": "limitless-temple-77311.herokuapp.com",
+    "host": "https://limitless-temple-77311.herokuapp.com/",
     "dialect": "postgres"
   }
 }
