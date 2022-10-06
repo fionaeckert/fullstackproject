@@ -140,4 +140,6 @@ app.post('/createuser', async (req, res) => {
     res.redirect('/registration')
 })
 
-app.listen(process.env.PORT || 3000);
+var port = process.env.PORT || 3000;
+
+app.listen(port);
