@@ -32,13 +32,13 @@ app.get('/login', (req, res)=> {
 
 //Renders the user's data from the database and displays it on the home page
 app.get('/home', async (req, res)=> {
-    console.log('username: ', username)
+    // console.log('username: ', username)
     const user = await users.findOne({
         where: {
             'username' : username
         }
     })
-    console.log(user.username)
+    // console.log(user.username)
 
     res.render("home",{
         username: user.username,
@@ -61,13 +61,13 @@ app.post('/checkpassword', async (req, res)=> {
         bcrypt.compare(req.body.password, user.password, function(err, result) {
 
             if(result == true) {
-                console.log('password matches')
+                // console.log('password matches')
                 username = user.username
                 res.redirect("/home")
             }
             else {
                 res.redirect('/login')
-                console.log('password does not match')
+                // console.log('password does not match')
             }
         
         
@@ -88,11 +88,14 @@ app.post('/createuser', async (req, res) => {
         }
         
     })
+    console.log('terms', typeof req.body.confirmterms)
+    console.log('age',(typeof req.body.confirmage))
+    console.log('first',typeof(req.body.username))
     
     var regex = /^[A-Za-z]+$/;
     var userregex = /^[a-z0-9_-]{3,16}$/; // Letters, Numbers, Underscore and dash, min 3, max 16
     var pwregex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,20}$/
-    console.log(regex.test(req.body.firstname))
+    // console.log(regex.test(req.body.firstname))
     
     if(regex.test(req.body.firstname) == false){
         // alert('Please enter a valid first name.')
@@ -108,14 +111,26 @@ app.post('/createuser', async (req, res) => {
     }
     else if(pwregex.test(req.body.password) == false){
         // alert('Please enter a valid password.')
-        error = "Please enter a valid password. Your password must have at least one uppercase letter, at least one lowercase letter, at least one special character, and at least one number."
+        error = "Please enter a valid password.\n Your password must have at least one uppercase letter,\n at least one lowercase letter, at least one special character,\n and at least one number."
     }
     else if(req.body.password.length < 6 || req.body.password.length > 20){
         // alert('Please enter a password between 6-20 characters.')
         error = 'Please enter a password between 6-20 characters.'
     }
     else if(req.body.password != req.body.confirmpassword) {
+        // console.log(req.body.password)
+        // console.log(req.body.confirmpassword)
         error = "Passwords do not match"
+    }
+    else if(req.body.confirmage == undefined) {
+        // console.log(req.body.password)
+        // console.log(req.body.confirmpassword)
+        error = "Please confirm age"
+    }
+    else if(req.body.confirmterms == undefined) {
+        // console.log(req.body.password)
+        // console.log(req.body.confirmpassword)
+        error = "Please confirm terms"
     }
     else {
         error = ''
@@ -124,14 +139,14 @@ app.post('/createuser', async (req, res) => {
     if(user == null && error == '') {
         bcrypt.genSalt(saltRounds, function(err, salt) {
             bcrypt.hash(req.body.password, salt, async function(err, hash) {
-        users.create({
-        firstName: req.body.firstname,
-        lastName: req.body.lastname,
-        username: req.body.username,
-        password: hash
+                users.create({
+                    firstName: req.body.firstname,
+                    lastName: req.body.lastname,
+                    username: req.body.username,
+                    password: hash
+                })
+            })
         })
-  })
-})
     }
     else if(error == '') {
         error = 'username already exists'
