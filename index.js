@@ -51,7 +51,8 @@ app.get('/home', async (req, res)=> {
 })
 
 app.post('/checkpassword', async (req, res)=> {
-
+    console.log(req.body.username)
+    console.log(req.body.password)
     const user = await users.findOne({
         where: {
             username : req.body.username
