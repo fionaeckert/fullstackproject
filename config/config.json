@@ -3,7 +3,7 @@
     "username": "postgres",
     "password": null,
     "database": "fullStackProject_DB",
-    "host": "https://limitless-temple-77311.herokuapp.com/",
+    "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {

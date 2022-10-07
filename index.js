@@ -153,7 +153,7 @@ app.post('/createuser', async (req, res) => {
         error = 'username already exists'
     }
     
-    res.redirect('/')
+    res.redirect('/login')
 })
 
 var port = process.env.PORT || 3000;
