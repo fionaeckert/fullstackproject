@@ -185,3 +185,8 @@ html, body {
 .valid-feedback{
    color: #2acc80;
 }
+
+.badge {
+  color: #FF2400;
+  font-size:medium;
+}
