@@ -144,6 +144,7 @@ app.post('/createuser', async (req, res) => {
                     firstName: req.body.firstname,
                     lastName: req.body.lastname,
                     username: req.body.username,
+                    email: req.body.email,
                     password: hash
                 })
             })
