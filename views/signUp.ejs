@@ -40,12 +40,6 @@
                         <form action="/createuser" method="post" class="requires-validation" novalidate>
                             <% {%>
                                 <div class="col-md-12">
-
-                                <input class="form-control" type="text" name="username" pattern="/^[a-z0-9_-]{3,16}$/" placeholder="Username" aria-required="true" required>
-                                <div class="valid-feedback">Username field is valid!</div>
-                                <div class="invalid-feedback">Username field cannot be blank!</div>
-                                </div>
-                                <div class="col-md-12">
                                     <input class="form-control" type="text" name="firstname" pattern="/^[A-Za-z]+$/" placeholder="First Name" required>
                                     <div class="valid-feedback">First Name field is valid!</div>
                                     <div class="invalid-feedback">First Name field cannot be blank!</div>
@@ -54,6 +48,16 @@
                                     <input class="form-control" type="text" name="lastname" pattern="/^[A-Za-z]+$/" placeholder="Last Name" required>
                                     <div class="valid-feedback">Last Name field is valid!</div>
                                     <div class="invalid-feedback">Last Name field cannot be blank!</div>
+                                </div>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" name="username" pattern="/^[a-z0-9_-]{3,16}$/" placeholder="Username" aria-required="true" required>
+                                    <div class="valid-feedback">Username field is valid!</div>
+                                    <div class="invalid-feedback">Username field cannot be blank!</div>
+                                </div>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="Email" aria-required="true" required>
+                                    <div class="valid-feedback">Email is valid!</div>
+                                    <div class="invalid-feedback">Email cannot be blank!</div>
                                 </div>
                             <div class="col-md-12">
                                 <input class="form-control" onkeyup='checkmatchpw()' type="password" name="password" pattern="/(?=(.*[0-9]))((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.{8,}$/" placeholder="Enter Password" required>
@@ -92,7 +96,8 @@
                             </div>
                             <div class="col-md-12 mt-3">
                                 </div> -->
-
+                            <div></div>
+                            <div></div>
                             <div class="form-check">
                                 <input class="form-check-input" name="confirmage" type="checkbox" value="" id="invalidCheck" required>
                                 <label class="form-check-label">I confirm that I'm at least 16 years old.</label>
