@@ -1,35 +1,77 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign-Up</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
         integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+<<<<<<< HEAD
     <link rel="stylesheet" href="/css/style.css">
     <title>Login</title>
+=======
+    
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+        integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/style.css">
+>>>>>>> 9c3078407e0e2b87072539f295dd911ba4966fae
 </head>
-<body>
-    <form action="/checkpassword" method="post" class="requires-validation" novalidate>
-        <% {%>
-            <div class="col-md-12">
-            <input class="form-control" type="text" name="username" placeholder="Username" aria-required="true" required>
-            </div>
 
-        <div class="col-md-12">
-            <input class="form-control" type="password" name="password" placeholder="Enter Password" required>
-        </div>
+    <div class="form-body">
+        <div class="row">
+            <div class="form-holder">
+                <div class="form-content">
+                    <div class="form-items">
+                        
+                        <h3>Welcome back!</h3>
+                        <p>Log into your account.</p>
+                        <p>Don't have an account? <a href="https://limitless-temple-77311.herokuapp.com" style="color: black">Sign up.</a></p>
+                    
+                            <form action="/checkpassword" method="post" class="requires-validation" novalidate>
+                                <% {%>
+                                <div class="col-md-12">
+                                <input class="form-control" type="text" name="username" pattern="/^[a-z0-9_-]{3,16}$/" placeholder="Username" aria-required="true" required>
+                                <div class="invalid-feedback">Username field cannot be blank!</div>
+                                </div>
 
+                                <div class="col-md-12">
+                                    <input class="form-control" type="password" name="password" pattern="/(?=(.*[0-9]))((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.{8,}$/" placeholder="Enter Password" required>
+                                    <div class="invalid-feedback">Password should have 1 lowercase letter, 1 uppercase letter, 1 number, and be at least 8 characters long</div>
+                                </div>
+                                <div class="col-md-12 mt-3">
+                                    </div>
 
+<<<<<<< HEAD
             <div class="form-button mt-3">
                 <button id="submit" type="submit" class="btn btn-primary">Register</button>
                 <button id="submit" type="submit" class="btn btn-primary">Forgot Password? <a href="https://limitless-temple-77311.herokuapp.com/resetpassword"></a></button>
-            </div>
-            <!-- <p> <%= error %></p><br><br> -->
-        <%} %>
-    </form>
-</body>
-</html>
+=======
+                                <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" required>
+                                <label class="form-check-label">Save Password</label>  <!--Non-working feature-->
 
+                                
+                                </div>
+                        
+
+                                <div class="form-button mt-3">
+                                    <button id="submit" type="submit" class="btn btn-primary">Log In</button>
+                                </div>
+                                <%} %>
+                            </form>
+                    </div>
+                </div>
+>>>>>>> 9c3078407e0e2b87072539f295dd911ba4966fae
+            </div>
+        </div>
+    </div>
+
+    <script src="../index.js"></script>
+</body>
+
+</html>

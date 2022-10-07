@@ -64,7 +64,8 @@ app.get('/forgotpassword', (req, res)=> {
 })
 
 app.post('/checkpassword', async (req, res)=> {
-
+    console.log(req.body.username)
+    console.log(req.body.password)
     const user = await users.findOne({
         where: {
             username : req.body.username
@@ -105,10 +106,12 @@ app.post('/createuser', async (req, res) => {
     console.log('terms', typeof req.body.confirmterms)
     console.log('age',(typeof req.body.confirmage))
     console.log('first',typeof(req.body.username))
+    console.log('email', req.body.email)
     
     var regex = /^[A-Za-z]+$/;
     var userregex = /^[a-z0-9_-]{3,16}$/; // Letters, Numbers, Underscore and dash, min 3, max 16
     var pwregex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,20}$/
+    var emailregex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
     // console.log(regex.test(req.body.firstname))
     
     if(regex.test(req.body.firstname) == false){
@@ -123,9 +126,13 @@ app.post('/createuser', async (req, res) => {
         // alert('Please enter a valid username.')
         error = 'Please enter a valid username.'
     }
+    else if(emailregex.test(req.body.email) == false){
+        // alert('Please enter a valid username.')
+        error = 'Please enter a valid email.'
+    }
     else if(pwregex.test(req.body.password) == false){
         // alert('Please enter a valid password.')
-        error = "Please enter a valid password.\n Your password must have at least one uppercase letter,\n at least one lowercase letter, at least one special character,\n and at least one number."
+        error = "Please enter a valid password"
     }
     else if(req.body.password.length < 6 || req.body.password.length > 20){
         // alert('Please enter a password between 6-20 characters.')
@@ -157,6 +164,7 @@ app.post('/createuser', async (req, res) => {
                     firstName: req.body.firstname,
                     lastName: req.body.lastname,
                     username: req.body.username,
+                    email: req.body.email,
                     password: hash
                 })
             })
@@ -165,8 +173,13 @@ app.post('/createuser', async (req, res) => {
     else if(error == '') {
         error = 'username already exists'
     }
+    if (error == '') {
+        res.redirect('/login')
+    }
+    else {
+        res.redirect('/')
+    }
     
-    res.redirect('/login')
 })
 
 
