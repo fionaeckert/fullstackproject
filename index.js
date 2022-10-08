@@ -40,19 +40,23 @@ app.get('/home', async (req, res)=> {
         }
     })
     // console.log(user.username)
-
-    res.render("home",{
-        username: user.username,
-        firstName: user.firstName,
-        lastName : user.lastName
-
-    })
-    username = null
+    if(user != null) {
+        res.render("home",{
+            username: user.username,
+            firstName: user.firstName,
+            lastName : user.lastName
+        })
+    }
+    else {
+        res.redirect("/login")
+    }
+    
+    
 })
 
 app.post('/checkpassword', async (req, res)=> {
-    console.log(req.body.username)
-    console.log(req.body.password)
+    console.log(req.socket.remoteAddress)
+    console.log(req.headers)
     const user = await users.findOne({
         where: {
             username : req.body.username
