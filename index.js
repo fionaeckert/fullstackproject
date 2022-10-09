@@ -14,9 +14,11 @@ const sgMail = require('@sendgrid/mail');
 const { message } = require('./sendEmail')
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 let error = ''
-let username = null
+// let username = null
+const session = require('express-session');
 
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(session({secret: 'profession speaker sofa shine cable conglomerate efflux studio bang money', resave: false, saveUninitialized: false}));
 
 
 app.use(express.static("public"));
@@ -25,51 +27,54 @@ app.use(express.static("public"));
 //Renders the registration (sign up) page on the port identified in app.use statement (3000)
 app.get('/', (req, res)=> {
     res.render("signUp",{
-        error : error
+        error : req.session.error
     })
-    error = ''
+    req.session.error = ''
 })
 
 //Renders the login page on the port identified in app.use statement (3000)
 app.get('/login', (req, res)=> {
-    res.render("login",{
-        error : error
-    })
-    error = ''
+    if(req.session.userId != null) {
+        res.redirect("/home")
+    }
+    else {
+        res.render("login",{
+            error : req.session.error
+        })
+        req.session.error = ''
+    }
+    
 })
 
 //Renders the user's data from the database and displays it on the home page
 app.get('/home', async (req, res)=> {
-    // console.log('username: ', username)
-    const user = await users.findOne({
-        where: {
-            'username' : username
-        }
-    })
-    // console.log(user.username)
-    if(user != null) {
+    console.log('userId1: ', req.session.userId)
+    if(req.session.userId == null) {
+        res.redirect("/login")
+    }
+    else {
+        const user = await users.findOne({
+            where: {
+                id: req.session.userId
+            }
+        })
+        
         res.render("home",{
             username: user.username,
             firstName: user.firstName,
             lastName : user.lastName
         })
     }
-    else {
-        res.redirect("/login")
-    }
-    
     
 })
 
 
 app.get('/forgotpassword', (req, res)=> {
-    console.log(message)
+    // console.log(message)
     res.render("forgotpassword",{ sendEmail: sendEmail})
 })
 
 app.post('/checkpassword', async (req, res)=> {
-    console.log(req.socket.remoteAddress)
-    console.log(req.headers)
     const user = await users.findOne({
         where: {
             username : req.body.username
@@ -80,27 +85,22 @@ app.post('/checkpassword', async (req, res)=> {
         bcrypt.compare(req.body.password, user.password, function(err, result) {
 
             if(result == true) {
-                // console.log('password matches')
                 username = user.username
+                req.session.userId = user.id
                 res.redirect("/home")
             }
             else {
                 res.redirect('/login')
-                // console.log('password does not match')
             }
-        
-        
         });
-
     }
     else {
         res.redirect('/login')
     }
-
 })
 
 app.post('/createuser', async (req, res) => {
-    error = ''
+    req.session.error = ''
     const user = await users.findOne({
         where: {
             username : req.body.username
@@ -120,48 +120,48 @@ app.post('/createuser', async (req, res) => {
     
     if(regex.test(req.body.firstname) == false){
         // alert('Please enter a valid first name.')
-        error = 'Please enter a valid first name.'
+        req.session.error = 'Please enter a valid first name.'
     }
     else if(regex.test(req.body.lastname) == false){
         // alert('Please enter a valid last name.')
-        error = 'Please enter a valid last name.'
+        req.session.error = 'Please enter a valid last name.'
     }
     else if(userregex.test(req.body.username) == false){
         // alert('Please enter a valid username.')
-        error = 'Please enter a valid username.'
+        req.session.error = 'Please enter a valid username.'
     }
     else if(emailregex.test(req.body.email) == false){
         // alert('Please enter a valid username.')
-        error = 'Please enter a valid email.'
+        req.session.error = 'Please enter a valid email.'
     }
     else if(pwregex.test(req.body.password) == false){
         // alert('Please enter a valid password.')
-        error = "Please enter a valid password"
+        req.session.error = "Please enter a valid password"
     }
     else if(req.body.password.length < 6 || req.body.password.length > 20){
         // alert('Please enter a password between 6-20 characters.')
-        error = 'Please enter a password between 6-20 characters.'
+        req.session.error = 'Please enter a password between 6-20 characters.'
     }
     else if(req.body.password != req.body.confirmpassword) {
         // console.log(req.body.password)
         // console.log(req.body.confirmpassword)
-        error = "Passwords do not match"
+        req.session.error = "Passwords do not match"
     }
     else if(req.body.confirmage == undefined) {
         // console.log(req.body.password)
         // console.log(req.body.confirmpassword)
-        error = "Please confirm age"
+        req.session.error = "Please confirm age"
     }
     else if(req.body.confirmterms == undefined) {
         // console.log(req.body.password)
         // console.log(req.body.confirmpassword)
-        error = "Please confirm terms"
+        req.session.error = "Please confirm terms"
     }
     else {
-        error = ''
+        req.session.error = ''
     }
     
-    if(user == null && error == '') {
+    if(user == null && req.session.error == '') {
         bcrypt.genSalt(saltRounds, function(err, salt) {
             bcrypt.hash(req.body.password, salt, async function(err, hash) {
                 users.create({
@@ -174,10 +174,10 @@ app.post('/createuser', async (req, res) => {
             })
         })
     }
-    else if(error == '') {
-        error = 'username already exists'
+    else if(req.session.error == '') {
+        req.session.error = 'username already exists'
     }
-    if (error == '') {
+    if (req.session.error == '') {
         res.redirect('/login')
     }
     else {
@@ -185,6 +185,12 @@ app.post('/createuser', async (req, res) => {
     }
     
 })
+
+app.post('/logout', (req, res)=> {
+    req.session.userId = null
+    res.redirect('/login')
+})
+
 
 
 // function update(id, changes) {
