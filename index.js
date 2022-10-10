@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 const app = express()
 app.set('view engine', 'ejs')
 const { users } = require('./models')
+const axios = require('axios');
 const bcrypt = require('bcrypt');
 const saltRounds = 8;
 const logger = require('./logger');
@@ -10,12 +11,13 @@ const sendEmail = require('./sendEmail');
 const jwt = require('jsonwebtoken');
 const sendGridKey = process.env.SENDGRID_KEY;
 const resetSecret = process.env.RESET_SECRET;
+const key = process.env.KEY;
 const sgMail = require('@sendgrid/mail');
-const { message } = require('./sendEmail')
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 let error = ''
 // let username = null
 const session = require('express-session');
+const { response } = require('express')
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(session({secret: 'profession speaker sofa shine cable conglomerate efflux studio bang money', resave: false, saveUninitialized: false}));
@@ -58,16 +60,31 @@ app.get('/home', async (req, res)=> {
                 id: req.session.userId
             }
         })
-        
+        axios.get(`https://newsdata.io/api/1/news?apikey=${key}&q=technology&language=en`)
+        .then(function (response) {
+        let selectedArticles = [];
+        for(let i=0; i<11; i++){
+        let article = {
+            "Title": response.data.results[i].title,
+            "Link": response.data.results[i].link,
+            "Description": response.data.results[i].description
+        }
+        selectedArticles.push(article)
+        }})
+        .catch(function (error) {
+            // handle error
+            res.statusCode = 500 // Internal Server Error
+            res.send('Unable to generate articles');
+        })
         res.render("home",{
             username: user.username,
             firstName: user.firstName,
-            lastName : user.lastName
+            lastName : user.lastName,
+            selectedArticles: selectedArticles
         })
     }
     
 })
-
 
 app.get('/forgotpassword', (req, res)=> {
     // console.log(message)
