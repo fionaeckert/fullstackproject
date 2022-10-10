@@ -20,7 +20,10 @@ body {
     -webkit-animation: Background 25s ease infinite;
     -moz-animation: Background 25s ease infinite;
     animation: Background 25s ease infinite;
+    height: max-content;
 }
+
+.pagetitle {border-bottom:1px transparent; padding-bottom:30px; margin-bottom:30px; margin-top:30px;}
 
 @-webkit-keyframes Background {
     0% {
@@ -57,12 +60,6 @@ body {
       background-position: 0% 50%
     }
   }
-
-html, body {
-    height: 100%;
-    background-color: #EEF1FF;
-    overflow: hidden;
-}
 
 
 .form-holder {
