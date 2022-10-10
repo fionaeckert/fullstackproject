@@ -1,25 +1,27 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const app = express()
-app.set('view engine', 'ejs')
-const { users } = require('./models')
+const express = require('express');
+const bodyParser = require('body-parser');
+const { users } = require('./models');
 const bcrypt = require('bcrypt');
 const saltRounds = 8;
 const logger = require('./logger');
-const sendEmail = require('./sendEmail');
+const { sendEmail } = require('./sendEmail');
 const jwt = require('jsonwebtoken');
+const sgMail = require('@sendgrid/mail');
+const methodOverride = require('method-override');
+const session = require('express-session');
+
+const app = express()
+app.set('view engine', 'ejs')
+
+app.use(methodOverride('_method'));
+
 const sendGridKey = process.env.SENDGRID_KEY;
 const resetSecret = process.env.RESET_SECRET;
-const sgMail = require('@sendgrid/mail');
-const { message } = require('./sendEmail')
+
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
-let error = ''
-// let username = null
-const session = require('express-session');
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(session({secret: 'profession speaker sofa shine cable conglomerate efflux studio bang money', resave: false, saveUninitialized: false}));
-
 
 app.use(express.static("public"));
 
@@ -68,10 +70,84 @@ app.get('/home', async (req, res)=> {
     
 })
 
-
+// render forgot password page
 app.get('/forgotpassword', (req, res)=> {
-    // console.log(message)
+    // console.log(req.body.email)
     res.render("forgotpassword",{ sendEmail: sendEmail})
+})
+
+// run send email function to send an email
+app.put('/forgotpassword', async (req,res) => {
+    // get user that matches email sent in body
+    const user = await users.findOne({
+        where: {
+            email : req.body.email
+        }
+    })
+
+    // if user is found then run sendEmail function
+    if(user != null) {
+        sendEmail(req.body.email, users)
+    }
+    
+    res.redirect('/resetpassword')
+})
+
+// render resetpassword page
+app.get('/resetpassword', (req, res)=> {
+    res.render("resetpassword",{ error: req.session.error})
+    
+})
+
+// update password
+app.put('/resetpassword', async (req, res)=> {
+    req.session.error = ''
+    console.log(req.body.email)
+    console.log(req.body.resetLink)
+
+    // see if email and reset code match whats in the database
+    const user = await users.findOne({
+        where: {
+            email : req.body.email,
+            resetLink : req.body.resetLink
+        }
+    })
+
+    // regex check for password
+    var pwregex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,20}$/
+
+    // if new password is valid and user email is valid and resetcode is valid 
+    if(req.body.password == req.body.confirmpassword && req.body.password.length > 6 && req.body.password.length < 20 && pwregex.test(req.body.password) == true && user != null) {
+        console.log("passwords match")
+        //new hash for password
+        bcrypt.genSalt(saltRounds, function(err, salt) {
+            bcrypt.hash(req.body.password, salt, async function(err, hash) {
+                await users.update({ "password" : hash }, {
+                    where: {
+                       email : req.body.email,
+                       resetLink : req.body.resetLink
+                    }
+                  });
+            })
+        })
+
+        // reset reset code to empty
+        await users.update({ "resetLink" : '' }, {
+            where: {
+                email : req.body.email,
+                resetLink : req.body.resetLink
+            }
+          });
+
+        res.redirect('/login')
+    }
+    else {
+        req.session.error = 'Unsuccesful'
+        res.redirect('/resetpassword')
+
+    }
+
+    
 })
 
 app.post('/checkpassword', async (req, res)=> {
