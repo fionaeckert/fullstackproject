@@ -60,11 +60,27 @@ app.get('/home', async (req, res)=> {
                 id: req.session.userId
             }
         })
-        
+        axios.get(`https://newsdata.io/api/1/news?apikey=${key}&q=technology&language=en`)
+        .then(function (response) {
+        let selectedArticles = [];
+        for(let i=0; i<11; i++){
+        let article = {
+            "Title": response.data.results[i].title,
+            "Link": response.data.results[i].link,
+            "Description": response.data.results[i].description
+        }
+        selectedArticles.push(article)
+        }})
+        .catch(function (error) {
+            // handle error
+            res.statusCode = 500 // Internal Server Error
+            res.send('Unable to generate articles');
+        })
         res.render("home",{
             username: user.username,
             firstName: user.firstName,
-            lastName : user.lastName
+            lastName : user.lastName,
+            selectedArticles: selectedArticles
         })
     }
     
