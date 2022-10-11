@@ -4,12 +4,15 @@ const { users, avatars } = require('./models');
 const bcrypt = require('bcrypt');
 const saltRounds = 8;
 const logger = require('./logger');
+const key = process.env.KEY;
 const { sendEmail } = require('./sendEmail');
 const jwt = require('jsonwebtoken');
 const sgMail = require('@sendgrid/mail');
 const methodOverride = require('method-override');
 const session = require('express-session');
+
 const axios = require('axios');
+
 
 const app = express()
 app.set('view engine', 'ejs')
@@ -54,8 +57,10 @@ app.get('/login', (req, res)=> {
 //Renders the user's data from the database and displays it on the home page
 app.get('/home', async (req, res)=> {
     let selectedArticles = [];
+
     let randomNum = 0
     // console.log('userId1: ', req.session.userId)
+
     if(req.session.userId == null) {
         res.redirect("/login")
     }
@@ -65,6 +70,7 @@ app.get('/home', async (req, res)=> {
                 id: req.session.userId
             }
         })
+
 
         await axios.get(`https://newsdata.io/api/1/news?apikey=${key}&q=technology&language=en`)
         .then(function async (response) {
@@ -87,6 +93,7 @@ app.get('/home', async (req, res)=> {
                 "Author": response.data.results[i].creator,
                 "Link": response.data.results[i].link,
                 "Description": description
+
 
         }
 
