@@ -83,35 +83,67 @@
                 </div>
                 <hr>
                 <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-sm-3" id="smallprofile">
                         <a href="#" class=""><img class="img-responsive" id="avatar" src=<%= randUser[0].dataValues.avatar %>></a>
+                        <div>
+                            <h6><%= randUser[0].dataValues.firstName %></h6>
+                        </div>
+                        
+                        <p>@<%= randUser[0].dataValues.username %></p>
                     </div>
                     <div class="col-sm-8">
-                        <h3 class="title"><%= selectedArticles[0].Title %></h3>
-                        <a href=<%= selectedArticles[0].Link %>>Link</a>
+                        <h3><a href=<%= selectedArticles[0].Link %>> <%= selectedArticles[0].Title %></a></h3>
+                        <h5><%= selectedArticles[0].Author %></h5>
                         <p><%= selectedArticles[0].Description %></p>
                     </div>
                 </div>
                 <hr>
                 <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-sm-3" id="smallprofile">
                         <a href="#" class=""><img class="img-responsive" id="avatar" src=<%= randUser[1].dataValues.avatar %>></a>
+                        <div>
+                            <h6><%= randUser[1].dataValues.firstName %></h6>
+                        </div>
+                        
+                        <p>@<%= randUser[1].dataValues.username %></p>
                     </div>
                     <div class="col-sm-8">
-                        <h3 class="title"><%= selectedArticles[1].Title %></h3>
-                        <a href=<%= selectedArticles[1].Link %>>Link</a>
+                        <h3><a href=<%= selectedArticles[1].Link %>> <%= selectedArticles[1].Title %></a></h3>
+                        <h5><%= selectedArticles[1].Author %></h5>
                         <p><%= selectedArticles[1].Description %></p>
                     </div>
                 </div>
                 <hr>
                 <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-sm-3" id="smallprofile">
                         <a href="#" class=""><img class="img-responsive" id="avatar" src=<%= randUser[2].dataValues.avatar %>></a>
+                        <div>
+                            <h6><%= randUser[2].dataValues.firstName %></h6>
+                        </div>
+                        
+                        <p>@<%= randUser[2].dataValues.username %></p>
                     </div>
-                    <div class="col-sm-8">
-                        <h3 class="title"><%= selectedArticles[2].Title %></h3>
-                        <a href=<%= selectedArticles[2].Link %>>Link</a>
+                    <div class="col-sm-8" id="articleinfo">
+                        <h3><a href=<%= selectedArticles[2].Link %>> <%= selectedArticles[2].Title %></a></h3>
+                        <h5><%= selectedArticles[2].Author %></h5>
                         <p><%= selectedArticles[2].Description %></p>
+                    </div>
+                </div>
+
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3" id="smallprofile">
+                        <a href="#" class=""><img class="img-responsive" id="avatar" src=<%= randUser[3].dataValues.avatar %>></a>
+                        <div>
+                            <h6><%= randUser[3].dataValues.firstName %></h6>
+                        </div>
+                        
+                        <p>@<%= randUser[3].dataValues.username %></p>
+                    </div>
+                    <div class="col-sm-8" id="articleinfo">
+                        <h3><a href=<%= selectedArticles[3].Link %>> <%= selectedArticles[3].Title %></a></h3>
+                        <h5><%= selectedArticles[3].Author %></h5>
+                        <p><%= selectedArticles[3].Description %></p>
                     </div>
                 </div>
 
