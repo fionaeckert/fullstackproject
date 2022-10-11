@@ -30,7 +30,7 @@
         <div class="row">
             <div class="col-md-3">
                 <h4 class="">Profile</h4>
-                <img src="https://via.placeholder.com/300X300" class="img-responsive">
+                <img class="img-responsive" id="mainavatar" src=<%= avatar %> >
                 <p></p>
                 <h3><%= firstName %></h3><h3><%= lastName %></h3>
                 <h5>@<%= username %></h5>
@@ -46,8 +46,12 @@
                     <div class="well">
                         <h4>Premium Membership</h4>
                         <p>Gain unlimited access to exclusive features.</p>
+                        
                         <button class="btn btn-sm btn-warning">Learn more</button>
                         <hr>
+                        <form action="/logout?_method=PUT" method="POST">
+                            <button class="btn btn-sm btn-danger">Sign Out</button>
+                        </form>
                         <!-- <p class="text-center ">Already a member? <a href="#">Sign in.</a></p> -->
                     </div>
                     <hr>
@@ -79,41 +83,35 @@
                 </div>
                 <hr>
                 <div class="row">
-                    <div class="col-sm-4"><a href="#" class=""><img src="https://via.placeholder.com/310X310"
-                                class="img-responsive"></a>
+                    <div class="col-sm-4">
+                        <a href="#" class=""><img class="img-responsive" id="avatar" src=<%= randUser[0].dataValues.avatar %>></a>
                     </div>
                     <div class="col-sm-8">
-                        <h3 class="title">Article #1</h3>
-                        <p><span class="glyphicon glyphicon-lock"></span>Date & Time</p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum accusantium quae eveniet vero
-                            voluptatem autem, incidunt quis consequatur est earum itaque, velit, nulla ullam rem sint
-                            alias illum. Animi, nesciunt.</p>
+                        <h3 class="title"><%= selectedArticles[0].Title %></h3>
+                        <a href=<%= selectedArticles[0].Link %>>Link</a>
+                        <p><%= selectedArticles[0].Description %></p>
                     </div>
                 </div>
                 <hr>
                 <div class="row">
-                    <div class="col-sm-4"><a href="#" class=""><img src="https://via.placeholder.com/310X310"
-                                class="img-responsive"></a>
+                    <div class="col-sm-4">
+                        <a href="#" class=""><img class="img-responsive" id="avatar" src=<%= randUser[1].dataValues.avatar %>></a>
                     </div>
                     <div class="col-sm-8">
-                        <h3 class="title">Article #2</h3>
-                        <p><span class="glyphicon glyphicon-calendar"></span>Date & Time</p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod, deleniti quaerat aut quas vero
-                            magni facere nesciunt facilis architecto perferendis at dolorum laborum necessitatibus animi
-                            porro voluptates reprehenderit alias quam.
+                        <h3 class="title"><%= selectedArticles[1].Title %></h3>
+                        <a href=<%= selectedArticles[1].Link %>>Link</a>
+                        <p><%= selectedArticles[1].Description %></p>
                     </div>
                 </div>
                 <hr>
                 <div class="row">
-                    <div class="col-sm-4"><a href="#" class=""><img src="https://via.placeholder.com/310X310"
-                                class="img-responsive"></a>
+                    <div class="col-sm-4">
+                        <a href="#" class=""><img class="img-responsive" id="avatar" src=<%= randUser[2].dataValues.avatar %>></a>
                     </div>
                     <div class="col-sm-8">
-                        <h3 class="title">Article #3</h3>
-                        <p><span class="glyphicon glyphicon-lock"></span>Date & Time</p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum eius commodi, nisi expedita
-                            illum libero ducimus minus pariatur sit. Aut unde est illo error ullam minima vitae pariatur
-                            labore sapiente?</p>
+                        <h3 class="title"><%= selectedArticles[2].Title %></h3>
+                        <a href=<%= selectedArticles[2].Link %>>Link</a>
+                        <p><%= selectedArticles[2].Description %></p>
                     </div>
                 </div>
 

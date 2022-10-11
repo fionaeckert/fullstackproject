@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { users } = require('./models');
+const { users, avatars } = require('./models');
 const bcrypt = require('bcrypt');
 const saltRounds = 8;
 const logger = require('./logger');
@@ -9,6 +9,7 @@ const jwt = require('jsonwebtoken');
 const sgMail = require('@sendgrid/mail');
 const methodOverride = require('method-override');
 const session = require('express-session');
+const axios = require('axios');
 
 const app = express()
 app.set('view engine', 'ejs')
@@ -17,6 +18,8 @@ app.use(methodOverride('_method'));
 
 const sendGridKey = process.env.SENDGRID_KEY;
 const resetSecret = process.env.RESET_SECRET;
+
+const key = process.env.KEY;
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
@@ -50,7 +53,9 @@ app.get('/login', (req, res)=> {
 
 //Renders the user's data from the database and displays it on the home page
 app.get('/home', async (req, res)=> {
-    console.log('userId1: ', req.session.userId)
+    let selectedArticles = [];
+    let randomNum = 0
+    // console.log('userId1: ', req.session.userId)
     if(req.session.userId == null) {
         res.redirect("/login")
     }
@@ -60,28 +65,53 @@ app.get('/home', async (req, res)=> {
                 id: req.session.userId
             }
         })
-        axios.get(`https://newsdata.io/api/1/news?apikey=${key}&q=technology&language=en`)
-        .then(function (response) {
-        let selectedArticles = [];
-        for(let i=0; i<11; i++){
-        let article = {
-            "Title": response.data.results[i].title,
-            "Link": response.data.results[i].link,
-            "Description": response.data.results[i].description
+        await axios.get(`https://newsdata.io/api/1/news?apikey=${key}&q=technology&language=en`)
+        .then(function async (response) {
+        
+        for(let i=0; i<4; i++){
+            // console.log(response.data.results[i].description)
+            let description = ''
+            if(response.data.results[i].description == null) {
+                description = ''
+            }
+            else if(response.data.results[i].description.length > 500) {
+                description = response.data.results[i].description.substring(0,500) +'...'
+            }
+            else {
+                description = response.data.results[i].description
+            }
+
+            let article = {
+                "Title": response.data.results[i].title,
+                "Link": response.data.results[i].link,
+                "Description": description
         }
+
         selectedArticles.push(article)
         }})
-        .catch(function (error) {
-            // handle error
-            res.statusCode = 500 // Internal Server Error
-            res.send('Unable to generate articles');
-        })
+        // console.log("selectedArticles2: ", selectedArticles)
+        // .catch(function (error) {
+        //     // handle error
+        //     res.statusCode = 500 // Internal Server Error
+        //     res.send('Unable to generate articles');
+        // })
+        const allUsers = await users.findAll()
+        let randUser = []
+
+        for(i = 0; i< 3; i++){
+            randomNum = Math.floor(Math.random() * (allUsers.length - 2 + 1) + 1)
+            randUser.push(allUsers[randomNum])
+        }
         res.render("home",{
+            avatar: user.avatar,
             username: user.username,
             firstName: user.firstName,
             lastName : user.lastName,
-            selectedArticles: selectedArticles
+            selectedArticles: selectedArticles,
+            randUser: randUser
         })
+        
+        
     }
     
 })
@@ -118,8 +148,8 @@ app.get('/resetpassword', (req, res)=> {
 // update password
 app.put('/resetpassword', async (req, res)=> {
     req.session.error = ''
-    console.log(req.body.email)
-    console.log(req.body.resetLink)
+    // console.log(req.body.email)
+    // console.log(req.body.resetLink)
 
     // see if email and reset code match whats in the database
     const user = await users.findOne({
@@ -134,7 +164,7 @@ app.put('/resetpassword', async (req, res)=> {
 
     // if new password is valid and user email is valid and resetcode is valid 
     if(req.body.password == req.body.confirmpassword && req.body.password.length > 6 && req.body.password.length < 20 && pwregex.test(req.body.password) == true && user != null) {
-        console.log("passwords match")
+        // console.log("passwords match")
         //new hash for password
         bcrypt.genSalt(saltRounds, function(err, salt) {
             bcrypt.hash(req.body.password, salt, async function(err, hash) {
@@ -199,10 +229,10 @@ app.post('/createuser', async (req, res) => {
         }
         
     })
-    console.log('terms', typeof req.body.confirmterms)
-    console.log('age',(typeof req.body.confirmage))
-    console.log('first',typeof(req.body.username))
-    console.log('email', req.body.email)
+    // console.log('terms', typeof req.body.confirmterms)
+    // console.log('age',(typeof req.body.confirmage))
+    // console.log('first',typeof(req.body.username))
+    // console.log('email', req.body.email)
     
     var regex = /^[A-Za-z]+$/;
     var userregex = /^[a-z0-9_-]{3,16}$/; // Letters, Numbers, Underscore and dash, min 3, max 16
@@ -252,7 +282,15 @@ app.post('/createuser', async (req, res) => {
     else {
         req.session.error = ''
     }
-    
+
+    // add random avatar for user
+    const avatarId = await avatars.findOne({
+        where: {
+            id: Math.floor(Math.random() * (28 - 1 + 1) + 1),
+        }
+    })
+
+
     if(user == null && req.session.error == '') {
         bcrypt.genSalt(saltRounds, function(err, salt) {
             bcrypt.hash(req.body.password, salt, async function(err, hash) {
@@ -261,7 +299,8 @@ app.post('/createuser', async (req, res) => {
                     lastName: req.body.lastname,
                     username: req.body.username,
                     email: req.body.email,
-                    password: hash
+                    password: hash,
+                    avatar: avatarId.avatar
                 })
             })
         })
@@ -278,115 +317,11 @@ app.post('/createuser', async (req, res) => {
     
 })
 
-app.post('/logout', (req, res)=> {
+app.put('/logout', (req, res)=> {
     req.session.userId = null
+    console.log('in logout')
     res.redirect('/login')
 })
-
-
-
-// function update(id, changes) {
-//     return db('users').where({ id }).update(changes);
-//   }
-
-// function sendEmail(user, token) {
-//     sgMail.setApiKey(sendGridKey);
-//     const msg = {
-//       to: user.email,
-//       from: "reset.chitterchatter@gmail.com", // your email
-//       subject: "Reset password requested",
-//       html: `
-//        <a href="${clientURL}/resetpassword/${token}">${token}</a>
-//      `
-//      // I'm only going to use an (a tag) to make this easier to
-//      // understand but feel free to add any email templates 
-//      // in the `html` property
-//     };
-  
-//     sgMail.send(msg)
-//       .then(() => {
-//         console.log("Email sent");
-//     }).catch((error) => {
-//         console.error(error);
-//     })
-//   }
-
-// app.patch('/forgotpassword', async (req, res) => {  
-//     try {
-//       // look for email in database
-//       const user = await users.findOne({
-//         where: {
-//             email : req.body.email
-//         }
-//     });
-//       // if there is no user send back an error
-//       if(!user) {
-//         error = 'Email not found. Please try again.'
-//         } else {
-//         // otherwise we need to create a temporary token that expires in 10 mins
-//         const resetLink = jwt.sign({ user: user.email }, 
-//         resetSecret, { expiresIn: '10m' });
-//         // update resetLink property to be the temporary token and then send email
-//         await update(user.id, { resetLink });
-//         // we'll define this function below
-//         sendEmail(user, resetLink);
-//         error = 'Please check your email and follow the link provided.';
-//       }
-//     } catch(error) {
-//         error = 'Invalid input.'
-//     }
-//   })
-
-//   app.patch('/resetpassword/:token', async (req, res) => {
-//     // Get the token from params
-//     const resetLink = req.params.token;
-//     const newPassword = req.body;
-  
-//     // if there is a token we need to decoded and check for no errors
-//     if(resetLink) {
-//       jwt.verify(resetLink, resetPassword, (error, decodedToken) => {
-//            if(error) {
-//             error = 'Incorrect token or expired.'
-//            }
-//       })
-//     }
-  
-//     try {
-//       // find user by the temporary token we stored earlier
-//       const user = await users.findOne({
-//         where: {
-//             email : req.body.email
-//         }});
-  
-//       // if there is no user, send back an error
-//       if(!user) {
-//         error = 'User does not exist. To create an account, follow this link.'
-//       }
-  
-//       // otherwise we need to hash the new password  before saving it in the database
-//       const hashPassword = bcrypt.hashSync(newPassword.password, 8);
-//       newPassword.password = hashPassword;
-  
-//       // update user credentials and remove the temporary link from database before saving
-//       const updatedCredentials = {
-//         password: newPassword.password,
-//         resetLink: null
-//       }
-  
-//       await update(user.id, updatedCredentials);
-//       error = 'User password has been updated. Please follow this link to sign in.';
-//     } catch (error) {
-//         error = 'Invalid input.'
-//     }
-//   })
-  
-
-//   app.get('/forgotpassword', (req, res)=> {
-//     res.render("forgotpassword",{
-//         error : error
-//     })
-//     error = ''
-// })
 
 var port = process.env.PORT || 3000;
 

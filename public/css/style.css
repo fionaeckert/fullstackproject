@@ -187,3 +187,19 @@ body {
   color: #FF2400;
   font-size:medium;
 }
+
+#mainavatar {
+  background-color: white;
+  vertical-align: middle;
+  border-radius: 50%;
+  height: 300px;
+  width: 300px;
+  
+}
+#avatar {
+  background-color: white;
+  vertical-align: middle;
+  border-radius: 50%;
+  height: 200px;
+  width: 200px;
+}
