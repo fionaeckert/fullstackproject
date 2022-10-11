@@ -22,7 +22,6 @@ app.use(methodOverride('_method'));
 const sendGridKey = process.env.SENDGRID_KEY;
 const resetSecret = process.env.RESET_SECRET;
 
-const key = process.env.KEY;
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
