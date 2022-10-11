@@ -9,6 +9,7 @@ const jwt = require('jsonwebtoken');
 const sgMail = require('@sendgrid/mail');
 const methodOverride = require('method-override');
 const session = require('express-session');
+const key = process.env.KEY;
 
 const axios = require('axios');
 
