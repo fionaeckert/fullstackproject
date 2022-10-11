@@ -4,7 +4,6 @@ const { users, avatars } = require('./models');
 const bcrypt = require('bcrypt');
 const saltRounds = 8;
 const logger = require('./logger');
-const key = process.env.KEY;
 const { sendEmail } = require('./sendEmail');
 const jwt = require('jsonwebtoken');
 const sgMail = require('@sendgrid/mail');
@@ -30,7 +29,7 @@ app.use(session({secret: 'profession speaker sofa shine cable conglomerate efflu
 
 app.use(express.static("public"));
 
-
+console.log(key)
 //Renders the registration (sign up) page on the port identified in app.use statement (3000)
 app.get('/', (req, res)=> {
     res.render("signUp",{
@@ -291,7 +290,7 @@ app.post('/createuser', async (req, res) => {
     else {
         req.session.error = ''
     }
-
+    
     // add random avatar for user
     const avatarId = await avatars.findOne({
         where: {
