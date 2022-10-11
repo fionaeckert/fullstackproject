@@ -21,6 +21,7 @@ body {
     -moz-animation: Background 25s ease infinite;
     animation: Background 25s ease infinite;
     height: max-content;
+    color: white;
 }
 
 .pagetitle {border-bottom:1px transparent; padding-bottom:30px; margin-bottom:30px; margin-top:30px;}
@@ -194,6 +195,7 @@ body {
   border-radius: 50%;
   height: 300px;
   width: 300px;
+  border: 5px solid gray;
   
 }
 #avatar {
@@ -202,4 +204,16 @@ body {
   border-radius: 50%;
   height: 200px;
   width: 200px;
+  border: 5px solid gray;
+
+}
+
+a {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+#smallprofile {
+  margin-left: 60px;
 }

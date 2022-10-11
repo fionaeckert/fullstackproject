@@ -4,7 +4,7 @@ const { users, avatars } = require('./models');
 const bcrypt = require('bcrypt');
 const saltRounds = 8;
 const logger = require('./logger');
-const key = process.env.KEY;
+// const key = process.env.KEY;
 const { sendEmail } = require('./sendEmail');
 const jwt = require('jsonwebtoken');
 const sgMail = require('@sendgrid/mail');
@@ -74,8 +74,8 @@ app.get('/home', async (req, res)=> {
 
         await axios.get(`https://newsdata.io/api/1/news?apikey=${key}&q=technology&language=en`)
         .then(function async (response) {
-        let selectedArticles = [];
-        for(let i=0; i<4; i++){
+        
+        for(let i=0; i<5; i++){
             // console.log(response.data.results[i].description)
             let description = ''
             if(response.data.results[i].description == null) {
@@ -94,10 +94,10 @@ app.get('/home', async (req, res)=> {
                 "Link": response.data.results[i].link,
                 "Description": description
 
+            
+            }
 
-        }
-
-        selectedArticles.push(article)
+            selectedArticles.push(article)
         }})
         // console.log("selectedArticles2: ", selectedArticles)
         // .catch(function (error) {
@@ -108,7 +108,7 @@ app.get('/home', async (req, res)=> {
         const allUsers = await users.findAll()
         let randUser = []
 
-        for(i = 0; i< 3; i++){
+        for(i = 0; i< 4; i++){
             randomNum = Math.floor(Math.random() * (allUsers.length - 2 + 1) + 1)
             randUser.push(allUsers[randomNum])
         }
