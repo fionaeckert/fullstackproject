@@ -4,12 +4,13 @@ const { users, avatars } = require('./models');
 const bcrypt = require('bcrypt');
 const saltRounds = 8;
 const logger = require('./logger');
-// const key = process.env.KEY;
+
 const { sendEmail } = require('./sendEmail');
 const jwt = require('jsonwebtoken');
 const sgMail = require('@sendgrid/mail');
 const methodOverride = require('method-override');
 const session = require('express-session');
+const key = process.env.KEY;
 
 const axios = require('axios');
 
@@ -22,7 +23,6 @@ app.use(methodOverride('_method'));
 const sendGridKey = process.env.SENDGRID_KEY;
 const resetSecret = process.env.RESET_SECRET;
 
-const key = process.env.KEY;
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
@@ -74,8 +74,9 @@ app.get('/home', async (req, res)=> {
 
         await axios.get(`https://newsdata.io/api/1/news?apikey=${key}&q=technology&language=en`)
         .then(function async (response) {
-        
+  
         for(let i=0; i<5; i++){
+
             // console.log(response.data.results[i].description)
             let description = ''
             if(response.data.results[i].description == null) {
@@ -306,7 +307,7 @@ app.post('/createuser', async (req, res) => {
     else {
         req.session.error = ''
     }
-
+    
     // add random avatar for user
     const avatarId = await avatars.findOne({
         where: {
