@@ -31,7 +31,7 @@ app.use(session({secret: 'profession speaker sofa shine cable conglomerate efflu
 
 app.use(express.static("public"));
 
-console.log(key)
+// console.log(key)
 //Renders the registration (sign up) page on the port identified in app.use statement (3000)
 app.get('/', (req, res)=> {
     res.render("signUp",{
@@ -112,6 +112,7 @@ app.get('/home', async (req, res)=> {
             username: user.username,
             firstName: user.firstName,
             lastName : user.lastName,
+            bio : user.bio,
             selectedArticles: selectedArticles,
             randUser: randUser
         })
@@ -194,12 +195,15 @@ app.get('/jobs', async (req, res)=> {
 
 // render forgot password page
 app.get('/forgotpassword', (req, res)=> {
+
     // console.log(req.body.email)
-    res.render("forgotpassword",{ sendEmail: sendEmail})
+    res.render("forgotpassword",{ error : req.session.error})
+    
 })
 
 // run send email function to send an email
 app.put('/forgotpassword', async (req,res) => {
+    req.session.error = ''
     // get user that matches email sent in body
     const user = await users.findOne({
         where: {
@@ -210,9 +214,14 @@ app.put('/forgotpassword', async (req,res) => {
     // if user is found then run sendEmail function
     if(user != null) {
         sendEmail(req.body.email, users)
+        req.session.error = ''
+        res.redirect('/resetpassword')
+    }
+    else {
+        req.session.error = 'Incorrect Email'
+        res.redirect('/forgotpassword')
     }
     
-    res.redirect('/resetpassword')
 })
 
 // render resetpassword page
@@ -224,8 +233,9 @@ app.get('/resetpassword', (req, res)=> {
 // update password
 app.put('/resetpassword', async (req, res)=> {
     req.session.error = ''
-    // console.log(req.body.email)
-    // console.log(req.body.resetLink)
+    console.log('in resetpassword put')
+    console.log(req.body.email)
+    console.log(req.body.resetLink)
 
     // see if email and reset code match whats in the database
     const user = await users.findOne({
@@ -240,9 +250,9 @@ app.put('/resetpassword', async (req, res)=> {
 
     // if new password is valid and user email is valid and resetcode is valid 
     if(req.body.password == req.body.confirmpassword && req.body.password.length > 6 && req.body.password.length < 20 && pwregex.test(req.body.password) == true && user != null) {
-        // console.log("passwords match")
+        console.log("passwords match")
         //new hash for password
-        bcrypt.genSalt(saltRounds, function(err, salt) {
+        await bcrypt.genSalt(saltRounds, async function(err, salt) {
             bcrypt.hash(req.body.password, salt, async function(err, hash) {
                 await users.update({ "password" : hash }, {
                     where: {
@@ -250,16 +260,18 @@ app.put('/resetpassword', async (req, res)=> {
                        resetLink : req.body.resetLink
                     }
                   });
+                await users.update({ "resetLink" : '' }, {
+                    where: {
+                        email : req.body.email,
+                    resetLink : req.body.resetLink
+                    }
+                });
             })
         })
 
         // reset reset code to empty
-        await users.update({ "resetLink" : '' }, {
-            where: {
-                email : req.body.email,
-                resetLink : req.body.resetLink
-            }
-          });
+        
+        req.session.error = ''
 
         res.redirect('/login')
     }
@@ -273,12 +285,14 @@ app.put('/resetpassword', async (req, res)=> {
 })
 
 app.post('/checkpassword', async (req, res)=> {
+    console.log('in checkpassword')
     const user = await users.findOne({
         where: {
             username : req.body.username
         }
     })
-    // console.log('user found:', user)
+    console.log(req.body.username)
+    console.log('user found:', user)
     if(user!=null) {
         bcrypt.compare(req.body.password, user.password, function(err, result) {
 
@@ -388,6 +402,61 @@ app.post('/createuser', async (req, res) => {
     }
     
 })
+
+app.get('/addbio', (req, res)=> {
+    console.log('in addbio')
+    if(req.session.userId == null) {
+        res.redirect("/login")
+    }
+    else {
+        res.render("addbio",{
+            error : req.session.error
+        })
+    }
+    req.session.error = ''
+})
+
+app.put('/addbio', async (req, res)=> {
+    console.log(req.body.bio)
+
+    await users.update({ "bio" : req.body.bio }, {
+        where: {
+           id : req.session.userId
+        }
+      });
+    res.redirect('/home')
+})
+
+app.get('/changeAvatar', async (req, res)=> {
+    console.log('in changeAvatar')
+    const allAvatars = await avatars.findAll()
+
+    if(req.session.userId == null) {
+        res.redirect("/login")
+    }
+    else {
+
+        res.render("changeAvatar",{
+            error : req.session.error,
+            allAvatars: allAvatars
+        })
+    }
+    req.session.error = ''
+})
+
+app.put('/changeAvatar', async (req, res)=> {
+    console.log(req.body.chosen)
+
+    await users.update({ "bio" : req.body.bio }, {
+        where: {
+           id : req.session.userId
+        }
+      });
+    res.redirect('/home')
+})
+
+
+
 
 app.put('/logout', (req, res)=> {
     req.session.userId = null

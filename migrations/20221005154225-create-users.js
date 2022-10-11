@@ -27,9 +27,12 @@ module.exports = {
       resetLink: {
         type: Sequelize.STRING
       },
-    avatar: {
-      type: Sequelize.STRING
-    },
+      avatar: {
+        type: Sequelize.STRING
+      },
+      bio: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
