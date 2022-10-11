@@ -73,7 +73,6 @@ app.get('/home', async (req, res)=> {
 
         await axios.get(`https://newsdata.io/api/1/news?apikey=${key}&q=technology&language=en`)
         .then(function async (response) {
-        let selectedArticles = [];
         for(let i=0; i<4; i++){
             // console.log(response.data.results[i].description)
             let description = ''
