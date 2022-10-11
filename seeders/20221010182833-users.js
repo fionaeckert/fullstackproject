@@ -8,7 +8,7 @@ module.exports = {
         firstName: 'Carlos',
         lastName: 'Hernandez',
         username: 'carlos',
-        email: 'carloshdzrco@gmail.com',
+        email: 'carlos@gmail.com',
         password: 'Ilovecoding123!',
         resetLink: '',
         avatar: 'https://joeschmoe.io/api/v1/jack',
