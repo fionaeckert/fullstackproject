@@ -65,9 +65,10 @@ app.get('/home', async (req, res)=> {
                 id: req.session.userId
             }
         })
+
         await axios.get(`https://newsdata.io/api/1/news?apikey=${key}&q=technology&language=en`)
         .then(function async (response) {
-        
+        let selectedArticles = [];
         for(let i=0; i<4; i++){
             // console.log(response.data.results[i].description)
             let description = ''
@@ -83,8 +84,10 @@ app.get('/home', async (req, res)=> {
 
             let article = {
                 "Title": response.data.results[i].title,
+                "Author": response.data.results[i].creator,
                 "Link": response.data.results[i].link,
                 "Description": description
+
         }
 
         selectedArticles.push(article)
