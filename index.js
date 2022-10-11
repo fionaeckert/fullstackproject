@@ -100,12 +100,6 @@ app.get('/home', async (req, res)=> {
 
             selectedArticles.push(article)
         }})
-        // console.log("selectedArticles2: ", selectedArticles)
-        // .catch(function (error) {
-        //     // handle error
-        //     res.statusCode = 500 // Internal Server Error
-        //     res.send('Unable to generate articles');
-        // })
         const allUsers = await users.findAll()
         let randUser = []
 
@@ -127,6 +121,77 @@ app.get('/home', async (req, res)=> {
     }
     
 })
+
+
+app.get('/jobs', async (req, res)=> {
+    let selectedJobs = [];
+
+    let randomNum = 0
+
+    if(req.session.userId == null) {
+        res.redirect("/login")
+    }
+    else {
+        const user = await users.findOne({
+            where: {
+                id: req.session.userId
+            }
+        })
+
+
+        await axios.get(`https://www.themuse.com/api/public/jobs?category=Computer%20and%20IT&category=Data%20and%20Analytics&category=Software%20Engineer&category=Software%20Engineering&category=UX&page=1`)
+        .then(function async (response) {
+  
+        for(let i=0; i<5; i++){
+            console.log(response.data.results[0].refs)
+            let description = ''
+            if(response.data.results[i].contents == null) {
+                description = ''
+            }
+            else if(response.data.results[i].contents.length > 500) {
+                description = response.data.results[i].contents
+                description = description.replace(/<\/?[^>]+>/gi, '')
+                description = description.substring(0,500) +'...'
+                
+            }
+            else {
+                description = response.data.results[i].contents
+            }
+
+            let jobPostings = {
+                "Position": response.data.results[i].name,
+                "Company": response.data.results[i].company.name,
+                "Link": response.data.results[i].refs.landing_page,
+                "Description": description
+
+            
+            }
+
+            selectedJobs.push(jobPostings)
+        }})
+
+        const allUsers = await users.findAll()
+        let randUser = []
+
+        for(i = 0; i< 4; i++){
+            randomNum = Math.floor(Math.random() * (allUsers.length - 2 + 1) + 1)
+            randUser.push(allUsers[randomNum])
+        }
+        res.render("jobs",{
+            avatar: user.avatar,
+            username: user.username,
+            firstName: user.firstName,
+            lastName : user.lastName,
+            selectedJobs: selectedJobs,
+            randUser: randUser
+        })
+        
+        
+    }
+    
+})
+
+
 
 // render forgot password page
 app.get('/forgotpassword', (req, res)=> {
@@ -254,10 +319,6 @@ app.post('/createuser', async (req, res) => {
         }
         
     })
-    // console.log('terms', typeof req.body.confirmterms)
-    // console.log('age',(typeof req.body.confirmage))
-    // console.log('first',typeof(req.body.username))
-    // console.log('email', req.body.email)
     
     var regex = /^[A-Za-z]+$/;
     var userregex = /^[a-z0-9_-]{3,16}$/; // Letters, Numbers, Underscore and dash, min 3, max 16

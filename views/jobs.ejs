@@ -38,7 +38,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>News Feed</h1>
+                    <h1>Jobs Feed</h1>
                 </div>
             </div>
         </div>
@@ -51,25 +51,10 @@
                 <p></p>
                 <h3><%= firstName %></h3><h3><%= lastName %></h3>
                 <h5>@<%= username %></h5>
-                <br>
-                <h5>Bio: </h5>
-                <p><%= bio %></p>
 
-                <% if (bio == null) { %>
-                    <form action="/addbio" method="get" class="requires-validation" novalidate>
-                        <button class="btn btn-sm btn-warning">Add Bio</button>
-                    </form>
-                    
-                <%} else { %>
-                    <form action="/addbio" method="get" class="requires-validation" novalidate>
-                        <button class="btn btn-sm btn-warning">Edit Bio</button>
-                    </form>
-                <% } %>
-                <!-- <form action="/changeAvatar" method="get" class="requires-validation" novalidate>
-                    <button class="btn btn-sm btn-warning">Change Avatar</button>
-                </form> -->
-                
-
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt cum, iste fuga veritatis possimus
+                    asperiores perferendis, reprehenderit sint molestiae voluptas saepe necessitatibus! Mollitia
+                    molestias dolores fugiat vero unde rerum iure.</p>
                 <div class="input-group">
                 </div>
                 </button>
@@ -88,7 +73,7 @@
                     </div>
                     <hr>
                     <div class="well">
-                        <!-- NEWS FEED -->
+                        <!-- JOBS FEED -->
                     </div>
                 </div>
             </div>
@@ -97,11 +82,11 @@
                     <div class="row">
                         <div class="col-xs-4">
                             <select class="form-control">
-                                <option><a href="http://127.0.0.1:3000/home">Featured Articles</a></option>
-                                <option><a href="http://127.0.0.1:3000/jobs">Job Posts</a></option>
-                            </select>
-                        </div> -->
-                        <!-- <div class="col-xs-8">
+                                <option onclick="renderJobs()">Job Posts</option>
+                                <option onclick="renderHome()">Featured Articles</option>
+                            </select> -->
+                        <!-- </div>
+                        <div class="col-xs-8">
                             <div class="btn-group pull-right">
                                 <button type="button" class="btn btn-default"><span
                                         class="glyphicon glyphicon-th"></span></button>
@@ -111,8 +96,8 @@
                                         class="glyphicon glyphicon-list"></span></button>
                             </div>
                         </div>
-                    </div>
-                </div> -->
+                    </div> -->
+                <!-- </div> -->
                 <hr>
                 <div class="row">
                     <div class="col-sm-3" id="smallprofile">
@@ -124,9 +109,9 @@
                         <p>@<%= randUser[0].dataValues.username %></p>
                     </div>
                     <div class="col-sm-8">
-                        <h3><a href=<%= selectedArticles[0].Link %>> <%= selectedArticles[0].Title %></a></h3>
-                        <h5><%= selectedArticles[0].Author %></h5>
-                        <p><%= selectedArticles[0].Description %></p>
+                        <h3><a href=<%= selectedJobs[0].Link %>> <%= selectedJobs[0].Position %></a></h3>
+                        <h5><%= selectedJobs[0].Company %></h5>
+                        <p><%= selectedJobs[0].Description %></p>
                     </div>
                 </div>
                 <hr>
@@ -140,9 +125,9 @@
                         <p>@<%= randUser[1].dataValues.username %></p>
                     </div>
                     <div class="col-sm-8">
-                        <h3><a href=<%= selectedArticles[1].Link %>> <%= selectedArticles[1].Title %></a></h3>
-                        <h5><%= selectedArticles[1].Author %></h5>
-                        <p><%= selectedArticles[1].Description %></p>
+                        <h3><a href=<%= selectedJobs[1].Link %>> <%= selectedJobs[1].Position %></a></h3>
+                        <h5><%= selectedJobs[1].Company %></h5>
+                        <p><%= selectedJobs[1].Description %></p>
                     </div>
                 </div>
                 <hr>
@@ -156,9 +141,9 @@
                         <p>@<%= randUser[2].dataValues.username %></p>
                     </div>
                     <div class="col-sm-8" id="articleinfo">
-                        <h3><a href=<%= selectedArticles[2].Link %>> <%= selectedArticles[2].Title %></a></h3>
-                        <h5><%= selectedArticles[2].Author %></h5>
-                        <p><%= selectedArticles[2].Description %></p>
+                        <h3><a href=<%= selectedJobs[2].Link %>> <%= selectedJobs[2].Position %></a></h3>
+                        <h5><%= selectedJobs[2].Company %></h5>
+                        <p><%= selectedJobs[2].Description %></p>
                     </div>
                 </div>
 
@@ -173,9 +158,9 @@
                         <p>@<%= randUser[3].dataValues.username %></p>
                     </div>
                     <div class="col-sm-8" id="articleinfo">
-                        <h3><a href=<%= selectedArticles[3].Link %>> <%= selectedArticles[3].Title %></a></h3>
-                        <h5><%= selectedArticles[3].Author %></h5>
-                        <p><%= selectedArticles[3].Description %></p>
+                        <h3><a href=<%= selectedJobs[3].Link %>> <%= selectedJobs[3].Position %></a></h3>
+                        <h5><%= selectedJobs[3].Company %></h5>
+                        <p><%= selectedJobs[3].Description %></p>
                     </div>
                 </div>
 
