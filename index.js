@@ -69,6 +69,7 @@ app.get('/home', async (req, res)=> {
         for(let i=0; i<11; i++){
         let article = {
             "Title": response.data.results[i].title,
+            "Author": response.data.results[i].creator,
             "Link": response.data.results[i].link,
             "Description": response.data.results[i].description
         }
