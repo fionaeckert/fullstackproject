@@ -2,3 +2,5 @@
 node_modules
 sendgrid.env
 key.env
+sendgrid.env
+npm-debug.log

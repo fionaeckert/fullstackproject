@@ -4,11 +4,14 @@ const { users } = require('./models');
 const bcrypt = require('bcrypt');
 const saltRounds = 8;
 const logger = require('./logger');
+const key = process.env.KEY;
 const { sendEmail } = require('./sendEmail');
 const jwt = require('jsonwebtoken');
 const sgMail = require('@sendgrid/mail');
 const methodOverride = require('method-override');
 const session = require('express-session');
+const axios = require('axios').default;
+
 
 const app = express()
 app.set('view engine', 'ejs')
@@ -50,6 +53,7 @@ app.get('/login', (req, res)=> {
 
 //Renders the user's data from the database and displays it on the home page
 app.get('/home', async (req, res)=> {
+    let selectedArticles = [];
     console.log('userId1: ', req.session.userId)
     if(req.session.userId == null) {
         res.redirect("/login")
@@ -62,7 +66,6 @@ app.get('/home', async (req, res)=> {
         })
         axios.get(`https://newsdata.io/api/1/news?apikey=${key}&q=technology&language=en`)
         .then(function (response) {
-        let selectedArticles = [];
         for(let i=0; i<11; i++){
         let article = {
             "Title": response.data.results[i].title,
@@ -282,111 +285,6 @@ app.post('/logout', (req, res)=> {
     req.session.userId = null
     res.redirect('/login')
 })
-
-
-
-// function update(id, changes) {
-//     return db('users').where({ id }).update(changes);
-//   }
-
-// function sendEmail(user, token) {
-//     sgMail.setApiKey(sendGridKey);
-//     const msg = {
-//       to: user.email,
-//       from: "reset.chitterchatter@gmail.com", // your email
-//       subject: "Reset password requested",
-//       html: `
-//        <a href="${clientURL}/resetpassword/${token}">${token}</a>
-//      `
-//      // I'm only going to use an (a tag) to make this easier to
-//      // understand but feel free to add any email templates 
-//      // in the `html` property
-//     };
-  
-//     sgMail.send(msg)
-//       .then(() => {
-//         console.log("Email sent");
-//     }).catch((error) => {
-//         console.error(error);
-//     })
-//   }
-
-// app.patch('/forgotpassword', async (req, res) => {  
-//     try {
-//       // look for email in database
-//       const user = await users.findOne({
-//         where: {
-//             email : req.body.email
-//         }
-//     });
-//       // if there is no user send back an error
-//       if(!user) {
-//         error = 'Email not found. Please try again.'
-//         } else {
-//         // otherwise we need to create a temporary token that expires in 10 mins
-//         const resetLink = jwt.sign({ user: user.email }, 
-//         resetSecret, { expiresIn: '10m' });
-//         // update resetLink property to be the temporary token and then send email
-//         await update(user.id, { resetLink });
-//         // we'll define this function below
-//         sendEmail(user, resetLink);
-//         error = 'Please check your email and follow the link provided.';
-//       }
-//     } catch(error) {
-//         error = 'Invalid input.'
-//     }
-//   })
-
-//   app.patch('/resetpassword/:token', async (req, res) => {
-//     // Get the token from params
-//     const resetLink = req.params.token;
-//     const newPassword = req.body;
-  
-//     // if there is a token we need to decoded and check for no errors
-//     if(resetLink) {
-//       jwt.verify(resetLink, resetPassword, (error, decodedToken) => {
-//            if(error) {
-//             error = 'Incorrect token or expired.'
-//            }
-//       })
-//     }
-  
-//     try {
-//       // find user by the temporary token we stored earlier
-//       const user = await users.findOne({
-//         where: {
-//             email : req.body.email
-//         }});
-  
-//       // if there is no user, send back an error
-//       if(!user) {
-//         error = 'User does not exist. To create an account, follow this link.'
-//       }
-  
-//       // otherwise we need to hash the new password  before saving it in the database
-//       const hashPassword = bcrypt.hashSync(newPassword.password, 8);
-//       newPassword.password = hashPassword;
-  
-//       // update user credentials and remove the temporary link from database before saving
-//       const updatedCredentials = {
-//         password: newPassword.password,
-//         resetLink: null
-//       }
-  
-//       await update(user.id, updatedCredentials);
-//       error = 'User password has been updated. Please follow this link to sign in.';
-//     } catch (error) {
-//         error = 'Invalid input.'
-//     }
-//   })
-  
-
-//   app.get('/forgotpassword', (req, res)=> {
-//     res.render("forgotpassword",{
-//         error : error
-//     })
-//     error = ''
-// })
 
 var port = process.env.PORT || 3000;
 
