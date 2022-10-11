@@ -21,7 +21,33 @@ body {
     -moz-animation: Background 25s ease infinite;
     animation: Background 25s ease infinite;
     height: max-content;
-    color: white;
+}
+
+#topsection {
+    position: relative;
+}
+
+#topsection::after {
+    content: "";
+    background-image: url(./landing_pg_image.jpg);
+    background-size: cover;
+    opacity: 0.75;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;   
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
 }
 
 .pagetitle {border-bottom:1px transparent; padding-bottom:30px; margin-bottom:30px; margin-top:30px;}
@@ -187,33 +213,4 @@ body {
 .badge {
   color: #FF2400;
   font-size:medium;
-}
-
-#mainavatar {
-  background-color: white;
-  vertical-align: middle;
-  border-radius: 50%;
-  height: 300px;
-  width: 300px;
-  border: 5px solid gray;
-  
-}
-#avatar {
-  background-color: white;
-  vertical-align: middle;
-  border-radius: 50%;
-  height: 200px;
-  width: 200px;
-  border: 5px solid gray;
-
-}
-
-a {
-  color: white;
-  background-color: transparent;
-  text-decoration: none;
-}
-
-#smallprofile {
-  margin-left: 60px;
 }
