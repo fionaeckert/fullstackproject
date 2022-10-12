@@ -18,7 +18,7 @@ job postings catered to the interests of our users.
 **APIs:** NewsData.io, @sendgrid/mail, The Muse
 
 **Other Incorporated Packages**: bcrypt, body-parser, 
-jsonwebtoken, knex, nodemon, winston
+jsonwebtoken, knex, nodemon
 
 
 ## Features
@@ -38,19 +38,25 @@ jsonwebtoken, knex, nodemon, winston
 
 ## Screenshots
 
-![Login Page](./Login.png)
+![Login Page](./screenshots/Login.png)
 
-![Registration Page](./Registration.png)
+![Registration Page](./screenshots/Registration.png)
 
-![Articles Feed](./Articles_Feed.png)
+![Forgot Password Page](./screenshots/Registration.png)
 
-![Jobs Feed](./Jobs_Feed.png)
+![Reset Password Email](./screenshots/Reset_Password_Email.png)
 
-![Profile](./Profile.png)
+![Reset Password Page](./screenshots/Reset_Password.png)
 
-![Add Bio](./Add_Bio.png)
+![Articles Feed](./screenshots/Articles_Feed.png)
 
-![Change Avatar](./Change_Avatar.png)
+![Jobs Feed](./screenshots/Jobs_Feed.png)
+
+![Profile](./screenshots/Profile.png)
+
+![Add Bio](./screenshots/Add_Bio.png)
+
+![Change Avatar](./screenshots/Change_Avatar.png)
 
 ## Developer Team
 

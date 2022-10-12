@@ -29,9 +29,9 @@ app.use(session({secret: 'profession speaker sofa shine cable conglomerate efflu
 
 app.use(express.static("public"));
 
-//Renders the registration (sign up) page on the port identified in app.use statement (3000)
+//Renders the landing page when the user accesses our site
 app.get('/', (req, res)=> {
-    res.render("signUp",{
+    res.render("landing",{
         error : req.session.error
     })
     req.session.error = ''
