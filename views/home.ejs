@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 
-<body>
+<body id="homeBody">
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
           <a class="navbar-brand">Chitter Chatter</a>
@@ -56,18 +56,18 @@
                 <p><%= bio %></p>
 
                 <% if (bio == null) { %>
-                    <form action="/addbio" method="get" class="requires-validation" novalidate>
-                        <button class="btn btn-sm btn-warning">Add Bio</button>
+                    <form  action="/addbio" method="get" class="requires-validation" novalidate>
+                        <button id="addBio" class="btn btn-sm btn-warning">Add Bio</button>
                     </form>
                     
                 <%} else { %>
                     <form action="/addbio" method="get" class="requires-validation" novalidate>
-                        <button class="btn btn-sm btn-warning">Edit Bio</button>
+                        <button id="addBio" class="btn btn-sm btn-warning">Edit Bio</button>
                     </form>
                 <% } %>
-                <!-- <form action="/changeAvatar" method="get" class="requires-validation" novalidate>
+                <form action="/changeAvatar" method="get" class="requires-validation" novalidate>
                     <button class="btn btn-sm btn-warning">Change Avatar</button>
-                </form> -->
+                </form>
                 
 
                 <div class="input-group">
@@ -124,7 +124,7 @@
                         <p>@<%= randUser[0].dataValues.username %></p>
                     </div>
                     <div class="col-sm-8">
-                        <h3><a href=<%= selectedArticles[0].Link %>> <%= selectedArticles[0].Title %></a></h3>
+                        <h3><a id="whiteLink" href=<%= selectedArticles[0].Link %>> <%= selectedArticles[0].Title %></a></h3>
                         <h5><%= selectedArticles[0].Author %></h5>
                         <p><%= selectedArticles[0].Description %></p>
                     </div>
@@ -140,7 +140,7 @@
                         <p>@<%= randUser[1].dataValues.username %></p>
                     </div>
                     <div class="col-sm-8">
-                        <h3><a href=<%= selectedArticles[1].Link %>> <%= selectedArticles[1].Title %></a></h3>
+                        <h3><a id="whiteLink" href=<%= selectedArticles[1].Link %>> <%= selectedArticles[1].Title %></a></h3>
                         <h5><%= selectedArticles[1].Author %></h5>
                         <p><%= selectedArticles[1].Description %></p>
                     </div>
@@ -156,7 +156,7 @@
                         <p>@<%= randUser[2].dataValues.username %></p>
                     </div>
                     <div class="col-sm-8" id="articleinfo">
-                        <h3><a href=<%= selectedArticles[2].Link %>> <%= selectedArticles[2].Title %></a></h3>
+                        <h3><a id="whiteLink" href=<%= selectedArticles[2].Link %>> <%= selectedArticles[2].Title %></a></h3>
                         <h5><%= selectedArticles[2].Author %></h5>
                         <p><%= selectedArticles[2].Description %></p>
                     </div>
@@ -173,7 +173,7 @@
                         <p>@<%= randUser[3].dataValues.username %></p>
                     </div>
                     <div class="col-sm-8" id="articleinfo">
-                        <h3><a href=<%= selectedArticles[3].Link %>> <%= selectedArticles[3].Title %></a></h3>
+                        <h3><a id="whiteLink" href=<%= selectedArticles[3].Link %>> <%= selectedArticles[3].Title %></a></h3>
                         <h5><%= selectedArticles[3].Author %></h5>
                         <p><%= selectedArticles[3].Description %></p>
                     </div>

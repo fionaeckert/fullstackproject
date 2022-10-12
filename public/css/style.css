@@ -214,3 +214,64 @@ html {
   color: #FF2400;
   font-size:medium;
 }
+
+#homeBody {
+  color: white;
+}
+
+/* #mainavatar {
+  background-color: white;
+  vertical-align: middle;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+} */
+
+#mainavatar {
+  background-color: white;
+  border-radius: 50%;
+  height: 250px;
+  width: 250px;
+  border: 5px solid gray;
+  
+  }
+
+#avatar {
+    background-color: white;
+    border-radius: 50%;
+    height: 200px;
+    width: 200px;
+    border: 5px solid gray;
+}   
+  
+#whiteLink {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+#smallprofile {
+  margin-left: 60px;
+}
+
+a {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+.avatarBox {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.avatarSelect {
+  margin: 10px;
+  display: flex;
+  flex-direction: column; 
+}
+
+#addBio {
+  margin-bottom: 5px;
+}
