@@ -16,7 +16,6 @@ const axios = require('axios');
 
 sgMail.setApiKey(process.env.SENDGRIDAPIKEY)
 
-
 const app = express()
 app.set('view engine', 'ejs')
 
