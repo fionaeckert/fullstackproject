@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 
-<body>
+<body id="homeBody">
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
           <a class="navbar-brand">Chitter Chatter</a>
@@ -51,10 +51,25 @@
                 <p></p>
                 <h3><%= firstName %></h3><h3><%= lastName %></h3>
                 <h5>@<%= username %></h5>
+                <br>
+                <h5>Bio: </h5>
+                <p><%= bio %></p>
 
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt cum, iste fuga veritatis possimus
-                    asperiores perferendis, reprehenderit sint molestiae voluptas saepe necessitatibus! Mollitia
-                    molestias dolores fugiat vero unde rerum iure.</p>
+                <% if (bio == null) { %>
+                    <form action="/addbio" method="get" class="requires-validation" novalidate>
+                        <button class="btn btn-sm btn-warning">Add Bio</button>
+                    </form>
+                    
+                <%} else { %>
+                    <form action="/addbio" method="get" class="requires-validation" novalidate>
+                        <button class="btn btn-sm btn-warning">Edit Bio</button>
+                    </form>
+                <% } %>
+                <form action="/changeAvatar" method="get" class="requires-validation" novalidate>
+                    <button class="btn btn-sm btn-warning">Change Avatar</button>
+                </form>
+
+                
                 <div class="input-group">
                 </div>
                 </button>

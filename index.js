@@ -183,6 +183,7 @@ app.get('/jobs', async (req, res)=> {
             firstName: user.firstName,
             lastName : user.lastName,
             selectedJobs: selectedJobs,
+            bio : user.bio,
             randUser: randUser
         })
         
@@ -299,7 +300,7 @@ app.post('/checkpassword', async (req, res)=> {
             if(result == true) {
                 username = user.username
                 req.session.userId = user.id
-                res.redirect("/home")
+                res.redirect("/jobs")
             }
             else {
                 res.redirect('/login')
@@ -446,8 +447,12 @@ app.get('/changeAvatar', async (req, res)=> {
 
 app.put('/changeAvatar', async (req, res)=> {
     console.log(req.body.chosen)
-
-    await users.update({ "bio" : req.body.bio }, {
+    const newAvatar = await avatars.findOne({
+        where: {
+            id: req.body.chosen
+        }
+    })
+    await users.update({ "avatar" : newAvatar.avatar }, {
         where: {
            id : req.session.userId
         }
