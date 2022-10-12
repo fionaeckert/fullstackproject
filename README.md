@@ -72,5 +72,5 @@ jsonwebtoken, knex, nodemon
 
 ## GitHub Repo
 
-[Chitter chatter repo](https://github.com/fionaeckert/fullstackproject)
+[Chitter Chatter Repo](https://github.com/fionaeckert/fullstackproject)
 
