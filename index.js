@@ -249,7 +249,7 @@ app.get('/home', async (req, res)=> {
     
 })
 
-
+// renders the jobs feed and calls the job board API to display relevant open positions
 app.get('/jobs', async (req, res)=> {
     let selectedJobs = [];
 
@@ -402,7 +402,7 @@ app.put('/resetpassword', async (req, res)=> {
             })
         })
 
-        // reset reset code to empty
+        // reset error code to empty
         
         req.session.error = ''
 
@@ -417,6 +417,114 @@ app.put('/resetpassword', async (req, res)=> {
     
 })
 
+// checks user-entered password against database and renders the home page if user and password match/are found in database
+// if user-entered password is not in database/does not match username in database, renders the login page
+app.post('/checkpassword', async (req, res)=> {
+    const user = await users.findOne({
+        where: {
+            username : req.body.username
+        }
+    })
+    if(user!=null) {
+        bcrypt.compare(req.body.password, user.password, function(err, result) {
+
+            if(result == true) {
+                username = user.username
+                req.session.userId = user.id
+                res.redirect("/home")
+            }
+            else {
+                res.redirect('/login')
+            }
+        });
+    }
+    else {
+        res.redirect('/login')
+    }
+})
+
+
+// creates new user with randomly generated avatar if all information is given and accurately filled out per Regex logic and stores information in database
+// redirects to the login page if user is successfully created
+// redirects to the registration page, with error messaging, if anything is erroneous
+app.post('/createuser', async (req, res) => {
+    req.session.error = ''
+    const user = await users.findOne({
+        where: {
+            username : req.body.username
+        }
+        
+    })
+    
+    var regex = /^[A-Za-z]+$/;
+    var userregex = /^[a-z0-9_-]{3,16}$/; // Letters, Numbers, Underscore and dash, min 3, max 16
+    var pwregex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,20}$/
+    var emailregex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+    
+    if(regex.test(req.body.firstname) == false){
+        req.session.error = 'Please enter a valid first name.'
+    }
+    else if(regex.test(req.body.lastname) == false){
+        req.session.error = 'Please enter a valid last name.'
+    }
+    else if(userregex.test(req.body.username) == false){
+        req.session.error = 'Please enter a valid username.'
+    }
+    else if(emailregex.test(req.body.email) == false){
+        req.session.error = 'Please enter a valid email.'
+    }
+    else if(pwregex.test(req.body.password) == false){
+        req.session.error = "Please enter a valid password"
+    }
+    else if(req.body.password.length < 6 || req.body.password.length > 20){
+        req.session.error = 'Please enter a password between 6-20 characters.'
+    }
+    else if(req.body.password != req.body.confirmpassword) {
+        req.session.error = "Passwords do not match"
+    }
+    else if(req.body.confirmage == undefined) {
+        req.session.error = "Please confirm age"
+    }
+    else if(req.body.confirmterms == undefined) {
+        req.session.error = "Please confirm terms"
+    }
+    else {
+        req.session.error = ''
+    }
+    
+    // adds random avatar for user
+    const avatarId = await avatars.findOne({
+        where: {
+            id: Math.floor(Math.random() * (28 - 1 + 1) + 1),
+        }
+    })
+
+
+    if(user == null && req.session.error == '') {
+        bcrypt.genSalt(saltRounds, function(err, salt) {
+            bcrypt.hash(req.body.password, salt, async function(err, hash) {
+                users.create({
+                    firstName: req.body.firstname,
+                    lastName: req.body.lastname,
+                    username: req.body.username,
+                    email: req.body.email,
+                    password: hash,
+                    avatar: avatarId.avatar
+                })
+            })
+        })
+    }
+    else if(req.session.error == '') {
+        req.session.error = 'username already exists'
+    }
+    if (req.session.error == '') {
+        res.redirect('/login')
+    }
+    else {
+        res.redirect('/')
+    }
+    
+})
 
 // creates ability to add/update user bio once user is logged in
 app.get('/addbio', (req, res)=> {
@@ -462,7 +570,7 @@ app.get('/changeAvatar', async (req, res)=> {
     req.session.error = ''
 })
 
-// 
+// enables user to update avatar once they are logged into the site
 app.put('/changeAvatar', async (req, res)=> {
     console.log(req.body.chosen)
     const newAvatar = await avatars.findOne({
@@ -480,7 +588,7 @@ app.put('/changeAvatar', async (req, res)=> {
 
 
 
-
+// allows user to log out from site
 app.put('/logout', (req, res)=> {
     req.session.userId = null
     console.log('in logout')
