@@ -57,12 +57,12 @@
 
                 <% if (bio == null) { %>
                     <form action="/addbio" method="get" class="requires-validation" novalidate>
-                        <button class="btn btn-sm btn-warning">Add Bio</button>
+                        <button id="addBio" class="btn btn-sm btn-warning">Add Bio</button>
                     </form>
                     
                 <%} else { %>
                     <form action="/addbio" method="get" class="requires-validation" novalidate>
-                        <button class="btn btn-sm btn-warning">Edit Bio</button>
+                        <button id="addBio" class="btn btn-sm btn-warning">Edit Bio</button>
                     </form>
                 <% } %>
                 <form action="/changeAvatar" method="get" class="requires-validation" novalidate>
