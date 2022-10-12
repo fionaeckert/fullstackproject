@@ -48,7 +48,7 @@ jsonwebtoken, knex, nodemon
 
 ![Registration Page](./screenshots/Registration.png)
 
-![Forgot Password Page](./screenshots/Forgot_Password.png.png)
+![Forgot Password Page](./screenshots/Forgot_Password.png)
 
 ![Reset Password Email](./screenshots/Reset_Password_Email.png)
 
