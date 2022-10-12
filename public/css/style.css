@@ -29,7 +29,7 @@ body {
 
 #topsection::after {
     content: "";
-    background-image: url(./landing_pg_image.jpg);
+    background-image: url(../img/landing_pg_image.jpg);
     background-size: cover;
     opacity: 0.75;
     top: 0;
@@ -42,6 +42,7 @@ body {
 
 html {
 	scroll-behavior: smooth;
+  margin-left: calc(100vw - 100%);
 }
 
 @media screen and (prefers-reduced-motion: reduce) {

@@ -13,7 +13,7 @@ job postings catered to the interests of our users.
 
 **Deployment:** Heroku
 
-**Design:** HTML, CSS, Boostrap
+**Design:** HTML, CSS, Boostrap, Tailblocks
 
 **APIs:** NewsData.io, @sendgrid/mail, The Muse
 
