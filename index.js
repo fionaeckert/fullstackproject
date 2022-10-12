@@ -14,7 +14,7 @@ const key = process.env.KEY;
 
 const axios = require('axios');
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+sgMail.setApiKey(process.env.SENDGRIDAPIKEY)
 
 
 const app = express()
