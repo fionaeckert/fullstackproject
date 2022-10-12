@@ -14,22 +14,21 @@ const key = process.env.KEY;
 
 const axios = require('axios');
 
+sgMail.setApiKey(process.env.SENDGRIDAPIKEY)
+
 
 const app = express()
 app.set('view engine', 'ejs')
 
 app.use(methodOverride('_method'));
 
-const sendGridKey = process.env.SENDGRID_KEY;
-const resetSecret = process.env.RESET_SECRET;
 
-
-sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(session({secret: 'profession speaker sofa shine cable conglomerate efflux studio bang money', resave: false, saveUninitialized: false}));
 
 app.use(express.static("public"));
+
 
 //Renders the landing page
 app.get('/', (req, res)=> {
@@ -40,6 +39,7 @@ app.get('/', (req, res)=> {
 //Renders the signup page
 app.get('/signup', (req, res)=> {
     res.render("signUp",{
+
         error : req.session.error
     })
     req.session.error = ''
@@ -418,6 +418,7 @@ app.put('/resetpassword', async (req, res)=> {
 })
 
 
+// creates ability to add/update user bio once user is logged in
 app.get('/addbio', (req, res)=> {
     console.log('in addbio')
     if(req.session.userId == null) {
@@ -431,6 +432,7 @@ app.get('/addbio', (req, res)=> {
     req.session.error = ''
 })
 
+// imposes user-entered bio onto the home page and redirects to the home page after user hits the "Save" button
 app.put('/addbio', async (req, res)=> {
     console.log(req.body.bio)
 
@@ -442,6 +444,7 @@ app.put('/addbio', async (req, res)=> {
     res.redirect('/home')
 })
 
+// enables user to update their avatar
 app.get('/changeAvatar', async (req, res)=> {
     console.log('in changeAvatar')
     const allAvatars = await avatars.findAll()
@@ -459,6 +462,7 @@ app.get('/changeAvatar', async (req, res)=> {
     req.session.error = ''
 })
 
+// 
 app.put('/changeAvatar', async (req, res)=> {
     console.log(req.body.chosen)
     const newAvatar = await avatars.findOne({
