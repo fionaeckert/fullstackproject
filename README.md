@@ -38,6 +38,12 @@ jsonwebtoken, knex, nodemon
 
 ## Screenshots
 
+![Landing Page 1](./screenshots/Landing_Page1.png)
+
+![Landing Page 2](./screenshots/Landing_Page2.png)
+
+![Landing Page 3](./screenshots/Landing_Page3.png)
+
 ![Login Page](./screenshots/Login.png)
 
 ![Registration Page](./screenshots/Registration.png)
