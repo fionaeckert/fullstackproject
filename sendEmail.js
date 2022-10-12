@@ -23,6 +23,7 @@ async function sendEmail(email, users){
         }
       });
     console.log(process.env.SENDGRID_API_KEY)
+    console.log(process.env.KEY)
     console.log('inside send email')
     sgMail
     .send(message)
