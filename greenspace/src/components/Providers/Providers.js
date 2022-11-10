@@ -1,5 +1,4 @@
-import React, {useState, useEffect} from 'react'
-import Card from 'react-bootstrap/Card'
+import React, {useState} from 'react'
 import Button from 'react-bootstrap/Button'
 import '../../styling/providers.css'
 import ProviderCards from './ProviderCards'

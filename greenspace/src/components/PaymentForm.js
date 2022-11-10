@@ -61,7 +61,7 @@ export default function PaymentForm() {
     <div id="entireFormContainer">
     <div id="headerContainer">
         <h4 id="header">Thank you for considering a $10 donation to Greenspace.</h4>
-        <p id="text">All proceeds this month will support <a target="_blank" href="http://www.nostigmas.org/">No Stigmas</a>, an organization devoted to shifting the societal perspctive on mental health.</p>
+        <p id="text">All proceeds this month will support <a target="_blank" rel="noreferrer" href="http://www.nostigmas.org/">No Stigmas</a>, an organization devoted to shifting the societal perspctive on mental health.</p>
         
     </div>
     {!success?

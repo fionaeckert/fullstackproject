@@ -1,9 +1,6 @@
-import React, {useState, useEffect} from 'react'
-import Card from 'react-bootstrap/Card'
-import Button from 'react-bootstrap/Button'
+import React from 'react'
 import '../../styling/providers.css'
-import ProviderCards from './ProviderCards'
-import Providers from './Providers'
+
 
 function ProviderBase() {
   return (

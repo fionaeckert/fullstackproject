@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import Card from 'react-bootstrap/Card'
 import '../../styling/providers.css'
-import Providers from './Providers'
+
 
 
 function ProviderCards(props) {
@@ -9,7 +9,7 @@ function ProviderCards(props) {
     <div className='cardContainer'>
       <Card style={{ width: '18rem' }} className="cards">
         <Card.Body>
-          <Card.Title><a target="_blank" href="https://cookcountyhealth.org/locations/englewood-health-center/">{props.provider[0].site_name}</a></Card.Title>
+          <Card.Title><a target="_blank" rel="noreferrer" href="https://cookcountyhealth.org/locations/englewood-health-center/">{props.provider[0].site_name}</a></Card.Title>
           <Card.Text className='cardText'>
             Hours of operation:
             <br />
@@ -26,7 +26,7 @@ function ProviderCards(props) {
       </Card>
       <Card style={{ width: '18rem' }} className="cards">
         <Card.Body>
-          <Card.Title><a target="_blank" href="http://cdph.purplebinder.com/locations/city-of-chicago/greater-grand-slash-mid-south-mental-health-center">{props.provider[1].site_name}</a></Card.Title>
+          <Card.Title><a target="_blank" rel="noreferrer" href="http://cdph.purplebinder.com/locations/city-of-chicago/greater-grand-slash-mid-south-mental-health-center">{props.provider[1].site_name}</a></Card.Title>
           <Card.Text className='cardText'>
             Hours of Operation:
             <br />
@@ -43,7 +43,7 @@ function ProviderCards(props) {
       </Card>
       <Card style={{ width: '18rem' }} className="cards">
         <Card.Body>
-          <Card.Title><a target="_blank" href="http://cdph.purplebinder.com/locations/city-of-chicago/greater-lawn-mental-health-center">{props.provider[2].site_name}</a></Card.Title>
+          <Card.Title><a target="_blank" rel="noreferrer" href="http://cdph.purplebinder.com/locations/city-of-chicago/greater-lawn-mental-health-center">{props.provider[2].site_name}</a></Card.Title>
           <Card.Text className='cardText'>
             Hours of Operation:
             <br />
@@ -60,7 +60,7 @@ function ProviderCards(props) {
       </Card>
       <Card style={{ width: '18rem' }} className="cards">
         <Card.Body>
-          <Card.Title><a target="_blank" href="https://lawndale.org/">{props.provider[3].site_name}</a></Card.Title>
+          <Card.Title><a target="_blank" rel="noreferrer" href="https://lawndale.org/">{props.provider[3].site_name}</a></Card.Title>
           <Card.Text className='cardText'>
             Hours of Operation:
             <br />
@@ -77,7 +77,7 @@ function ProviderCards(props) {
       </Card>
       <Card style={{ width: '18rem' }} className="cards">
         <Card.Body>
-          <Card.Title><a target="_blank" href="http://cdph.purplebinder.com/locations/city-of-chicago/north-river-mental-health-center">{props.provider[4].site_name}</a></Card.Title>
+          <Card.Title><a target="_blank" rel="noreferrer" href="http://cdph.purplebinder.com/locations/city-of-chicago/north-river-mental-health-center">{props.provider[4].site_name}</a></Card.Title>
           <Card.Text className='cardText'>
             Hours of Operation:
             <br />

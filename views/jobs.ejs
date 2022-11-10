@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feed Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+        integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+        integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body id="homeBody">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+          <a class="navbar-brand">Chitter Chatter</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="https://chitterchatterchitterchatter.herokuapp.com/home">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="https://chitterchatterchitterchatter.herokuapp.com/jobs">Jobs</a>
+              </li>
+          </div>
+        </div>
+      </nav>
+    <div class="row-fluid pagetitle">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Jobs Feed</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <h4 class="">Profile</h4>
+                <img class="img-responsive" id="mainavatar" src=<%= avatar %> >
+                <p></p>
+                <h3><%= firstName %></h3><h3><%= lastName %></h3>
+                <h5>@<%= username %></h5>
+                <br>
+                <h5>Bio: </h5>
+                <p><%= bio %></p>
+
+                <% if (bio == null) { %>
+
+                    <form action="/addbio" method="get" class="requires-validation" novalidate>
+
+                        <button id="addBio" class="btn btn-sm btn-warning">Add Bio</button>
+                    </form>
+                    
+                <%} else { %>
+                    <form action="/addbio" method="get" class="requires-validation" novalidate>
+                        <button id="addBio" class="btn btn-sm btn-warning">Edit Bio</button>
+                    </form>
+                <% } %>
+                <form action="/changeAvatar" method="get" class="requires-validation" novalidate>
+                    <button class="btn btn-sm btn-warning">Change Avatar</button>
+                </form>
+                
+
+                <div class="input-group">
+                </div>
+                </button>
+            </div>
+            <div class="col-md-9">
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3" id="smallprofile">
+                        <a href="#" class=""><img class="img-responsive" id="avatar" src=<%= randUser[0].dataValues.avatar %>></a>
+                        <div>
+                            <h6><%= randUser[0].dataValues.firstName %></h6>
+                        </div>
+                        
+                        <p>@<%= randUser[0].dataValues.username %></p>
+                    </div>
+                    <div class="col-sm-8">
+                        <h3><a href=<%= selectedJobs[0].Link %>> <%= selectedJobs[0].Position %></a></h3>
+                        <h5><%= selectedJobs[0].Company %></h5>
+                        <p><%= selectedJobs[0].Description %></p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3" id="smallprofile">
+                        <a href="#" class=""><img class="img-responsive" id="avatar" src=<%= randUser[1].dataValues.avatar %>></a>
+                        <div>
+                            <h6><%= randUser[1].dataValues.firstName %></h6>
+                        </div>
+                        
+                        <p>@<%= randUser[1].dataValues.username %></p>
+                    </div>
+                    <div class="col-sm-8">
+                        <h3><a href=<%= selectedJobs[1].Link %>> <%= selectedJobs[1].Position %></a></h3>
+                        <h5><%= selectedJobs[1].Company %></h5>
+                        <p><%= selectedJobs[1].Description %></p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3" id="smallprofile">
+                        <a href="#" class=""><img class="img-responsive" id="avatar" src=<%= randUser[2].dataValues.avatar %>></a>
+                        <div>
+                            <h6><%= randUser[2].dataValues.firstName %></h6>
+                        </div>
+                        
+                        <p>@<%= randUser[2].dataValues.username %></p>
+                    </div>
+                    <div class="col-sm-8" id="articleinfo">
+                        <h3><a href=<%= selectedJobs[2].Link %>> <%= selectedJobs[2].Position %></a></h3>
+                        <h5><%= selectedJobs[2].Company %></h5>
+                        <p><%= selectedJobs[2].Description %></p>
+                    </div>
+                </div>
+
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3" id="smallprofile">
+                        <a href="#" class=""><img class="img-responsive" id="avatar" src=<%= randUser[3].dataValues.avatar %>></a>
+                        <div>
+                            <h6><%= randUser[3].dataValues.firstName %></h6>
+                        </div>
+                        
+                        <p>@<%= randUser[3].dataValues.username %></p>
+                    </div>
+                    <div class="col-sm-8" id="articleinfo">
+                        <h3><a href=<%= selectedJobs[3].Link %>> <%= selectedJobs[3].Position %></a></h3>
+                        <h5><%= selectedJobs[3].Company %></h5>
+                        <p><%= selectedJobs[3].Description %></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

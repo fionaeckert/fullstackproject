@@ -1,7 +1,6 @@
 import React from 'react'
 import ChatBot from 'react-simple-chatbot';
-import { BrowserRouter as Router, Switch, 
-    Route, NavLink } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, NavLink } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components';
 import '../styling/chatbot.css'
 
@@ -32,7 +31,7 @@ const steps = [
         id: 'welcome-user-response',
         user: true,
         validator: (value) => {
-            if (isNaN(value) == false) {
+            if (isNaN(value) === false) {
             return 'Please enter your name!';
             }
             return true;
