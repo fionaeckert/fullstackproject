@@ -1,0 +1,13 @@
+.container{
+    display: flex;
+    justify-content: center;
+}
+.formContainer{
+    display: flex;
+    justify-content: center;
+}
+
+.inputBoxes{
+    display: flex;
+    flex-wrap: wrap;
+}

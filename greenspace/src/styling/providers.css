@@ -1,0 +1,60 @@
+@font-face{
+    font-family:Happy-Times;
+    src:url('./happy-times-NG_regular_master.otf')
+}
+
+.container{
+    font-family: Happy-Times;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.header{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: left;
+}
+
+.headerContainer{
+    display: flex;
+    justify-content: left;
+    width:100%
+}
+
+.formContainer{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-direction: column;
+    margin-bottom: 20px;
+
+}
+
+.cardContainer{
+    display: flex;
+    flex-wrap: wrap-reverse;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.cards{
+    margin:25px;
+    background-color: #eeecd3 !important;
+}
+
+.cardText{
+    font-size: 18px;
+}
+
+.button{
+    background-color: #eeecd3 !important;
+    color: #5A5A5A !important;
+    font-size: 18px!important;
+    border: #eeecd3 !important;
+}
+
+.button:hover{
+    opacity: 100% !important;
+}

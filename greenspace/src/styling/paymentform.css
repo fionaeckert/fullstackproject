@@ -1,0 +1,84 @@
+#entireFormContainer{
+    margin-top: 30px;
+}
+
+#headerContainer{
+    margin-bottom: 30px;
+}
+
+#header{
+    text-align: center;
+    font-family: Happy-Times;
+}
+
+#text{
+   text-align: center;
+   font-family: Happy-Times;
+}
+
+#paymentFormContainer{
+    height: 200px;
+    width:800px;
+    text-align: center;
+    margin-left: 80px;
+}
+
+.Form {
+	padding: 0;
+	border-style: none;
+	background-color: #eeecd3;
+	opacity: 80%;
+	will-change: opacity, transform;
+	box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08);
+	border-radius: 10px;
+}
+
+.Form:hover{
+	opacity: 100%
+}
+
+.FormRow {
+	display: flex;
+	-ms-flex-align: center;
+	align-items: center;
+    height: 50px;
+}
+
+.StripeElement--webkit-autofill {
+	background: transparent !important;
+}
+
+.StripeElement {
+	width: 100%;
+	padding: 11px 15px 11px 0;
+    
+}
+
+#button {
+    margin-top: 10px;
+    margin-left:8px;
+	font-size: 16px;
+	width: calc(100% - 25px);
+	height: 40px;
+	background-color: E7E6F7;
+	box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 E7E6F7;
+	color: "#s393d2d";
+	font-weight: 600;
+	font-size: 20px;
+	cursor: pointer;
+	transition: all 100ms ease-in-out;
+	will-change: transform, background-color, box-shadow;
+	border: none;
+    border-radius: 10px;
+	opacity: 80%;
+}
+
+#button:hover{
+	opacity: 100%;
+}
+
+button:active {
+	background-color: #f8e8bf;
+	box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 #e298d8;
+	transform: scale(0.99);
+}

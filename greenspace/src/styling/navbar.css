@@ -1,0 +1,34 @@
+@font-face{
+    font-family:Sporting-Grotesque;
+    src:url('./SportingGrotesque-Regular.otf')
+}
+
+#greenspace{
+    font-family: 'Sporting-Grotesque';
+}
+
+#greenspace:hover{
+    background-color: #527e5f;
+    border-radius: 80%;
+}
+
+#navbar{
+    margin-bottom: 10px;
+    display: flex;
+}
+
+#nav-container{
+    display: flex;
+}
+
+#left-nav{
+    display: flex;
+    justify-content: left;
+}
+
+#right-nav{
+    display: flex;
+    justify-content: right;
+    font-family: 'Sporting-Grotesque';
+
+}
